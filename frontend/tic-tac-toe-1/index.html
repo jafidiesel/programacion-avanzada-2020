@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tic tac toe</title>
+</head>
+<body>
+    Jugador 1:<input type="text" name="player1" id="player1">
+    Jugador 2:<input type="text" name="player2" id="player2">
+    <button onclick="initializeGame()">Comenzar juego</button>
+    <h2 id="big-message"></h2>
+    <table id="board">
+        <tr id="first-row">
+            <td>
+                <input type="hidden" name="cell00" id="cell00">
+                <button id="button00" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell01" id="cell01">
+                <button id="button01" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell02" id="cell02">
+                <button id="button02" onclick="selectPosition(this.id)" ></button>
+            </td>
+        </tr>
+        <tr id="second-row" >
+            <td>
+                <input type="hidden" name="cell10" id="cell10">
+                <button id="button10" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell11" id="cell11">
+                <button id="button11" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell12" id="cell12">
+                <button id="button12" onclick="selectPosition(this.id)" ></button>
+            </td>
+        </tr>
+        <tr id="third-row">
+            <td>
+                <input type="hidden" name="cell20" id="cell20">
+                <button id="button20" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell21" id="cell21">
+                <button id="button21" onclick="selectPosition(this.id)" ></button>
+            </td>
+            <td>
+                <input type="hidden" name="cell22" id="cell22">
+                <button id="button22" onclick="selectPosition(this.id)" ></button>
+            </td>
+        </tr>
+    </table>
+
+    <button onclick="cleanBoard()">Limpiar Tablero</button>
+    <script type="text/javascript" src="tateti.js"></script>
+    <script>
+        const cleanBoard = () => {
+
+            let boardElement = document.querySelector('#board');
+            let rowArray = boardElement.querySelectorAll('tr');
+
+            boardElement.style.display="block";
+
+            for (let rowIndex = 0; rowIndex < rowArray.length; rowIndex++) {
+                const rowElement = rowArray[rowIndex].querySelectorAll('td');
+
+                for (let colIndex = 0; colIndex < rowElement.length; colIndex++) {
+                    const cellInput = rowElement[colIndex].querySelector('input');
+                    const cellButton = rowElement[colIndex].querySelector('button');
+
+                    //console.log("rowIndex", rowIndex, "colIndex",colIndex,"cellInput",cellInput);
+                    cellInput.value = "";
+                    cellButton.innerText = "";
+                    
+                }
+
+            }
+            randomizeStartingPlayer();
+        }
+
+        const initializeGame = () =>{
+            let player1Name = document.querySelector('#player1').value;
+            let player2Name = document.querySelector('#player2').value;
+            if(!player1Name || !player2Name) return false;
+            savePlayersNames(player1Name, player2Name);
+            
+            cleanBoard();
+            randomizeStartingPlayer(); 
+
+        }
+
+        const randomizeStartingPlayer = () => { 
+            const bigMessage = document.querySelector('#big-message');
+            let playerName = "";
+            let playerLetter = "";
+            if(Math.random() < 0.5){
+                playerName = getPlayerData('player1').name;
+                playerLetter = getPlayerData('player1').letter;
+            }else{
+                playerName = getPlayerData('player2').name;
+                playerLetter = getPlayerData('player2').letter;
+            }
+
+            updateCurrentPlayer(playerName, playerLetter);
+            bigMessage.innerText = `Turno del jugador ${playerName} (${playerLetter})`;
+        }
+
+        const selectPosition = (idCell) => {
+            //console.log('selectPosition',idCell,getCurrentPlayer().letter);
+            inputCell = document.querySelector(`#${idCell}`).parentElement.querySelector('input');
+            //console.log('inputCell.value',inputCell.value);
+            if(inputCell.value) return;
+            document.querySelector(`#${idCell}`).parentElement.querySelector('input').value = getCurrentPlayer().letter;
+            document.querySelector(`#${idCell}`).innerText = getCurrentPlayer().letter;
+
+            announceNextPlayer();
+        }
+        
+        const announceNextPlayer = () => {
+            nextPlayer();
+            let player = getCurrentPlayer();
+            document.querySelector('#big-message').innerText = `Turno del jugador ${player.name} (${player.letter})`;
+            
+        }
+
+        const checkGameStatus = () => {
+            let cellsNodeArray = document.querySelectorAll(`#board input`);
+            gameStatus(cellsNodeArray);
+        }
+    </script>
+
+</body>
+</html>
