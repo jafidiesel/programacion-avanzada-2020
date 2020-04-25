@@ -1,6 +1,23 @@
 const declareAWinner = (letterWinner) => {
   console.log("declareAWinner", "letterWinner", letterWinner);
+  if(sessionStorage.getItem('player1Letter') === letterWinner){
+    sessionStorage.setItem('player1Wins', parseInt(sessionStorage.getItem('player1Wins')) + 1);
+}else if(sessionStorage.getItem('player2Letter') === letterWinner){
+    sessionStorage.setItem('player2Wins', parseInt(sessionStorage.getItem('player2Wins')) + 1);
+  }
 };
+
+const declareATie = () => {
+    sessionStorage.setItem('ties', parseInt(sessionStorage.getItem('ties')) + 1);
+}
+
+const getPlayerNameByLetter = (letter) => {
+    if(sessionStorage.getItem('player1Letter') === letter){
+        return sessionStorage.getItem('player1Name');
+    }else if(sessionStorage.getItem('player2Letter') === letter){
+        return sessionStorage.getItem('player2Name');
+      }
+}
 
 const initializePlayersWins = () => {
   sessionStorage.setItem("player1Wins", 0);
@@ -41,6 +58,14 @@ const getPlayerData = (player) => {
   };
 };
 
+const getGameScore = () => {
+    return {
+        player1: sessionStorage.getItem("player1Wins"),
+        player2: sessionStorage.getItem("player2Wins"),
+        ties: sessionStorage.getItem("ties")
+    }
+};
+
 const updateCurrentPlayer = (playerName, playerLetter) => {
   sessionStorage.setItem("playerCurrentName", playerName);
   sessionStorage.setItem("playerCurrentLetter", playerLetter);
@@ -71,6 +96,7 @@ const gameStatus = (arr) => {
   let multiArr = [[]];
   let multiArrTransp = [[]];
   let multiArrDiagonals = [[]];
+  let arrIscomplete = true;
 
   for (let index = 0; index < arr.length; index++) {
     const row = multiArr[Math.floor(index / Math.sqrt(arr.length))];
@@ -79,14 +105,13 @@ const gameStatus = (arr) => {
     multiArr[Math.floor(index / Math.sqrt(arr.length))].push(arr[index]);
   }
 
-  console.log("multiArr", multiArr);
-
   // check rows
   for (let index = 0; index < multiArr.length; index++) {
     const row = multiArr[index];
     if (checkRowCombination(row)) {
-      declareAWinner(row[0]);
-      return row[0];
+        declareAWinner(row[0]);
+      console.log('--------checking rows---------');
+      return `Ganador ${getPlayerNameByLetter(row[0])} (${row[0]})`;
     }
   }
   // check columns
@@ -95,8 +120,9 @@ const gameStatus = (arr) => {
   for (let index = 0; index < multiArrTransp.length; index++) {
     const row = multiArrTransp[index];
     if (checkRowCombination(row)) {
-      declareAWinner(row[0]);
-      return row[0];
+        declareAWinner(row[0]);
+      console.log('--------checking columns---------');
+      return `Ganador ${getPlayerNameByLetter(row[0])} (${row[0]})`;
     }
   }
 
@@ -106,12 +132,23 @@ const gameStatus = (arr) => {
     const row = multiArrDiagonals[index];
     if (checkRowCombination(row)) {
       declareAWinner(row[0]);
-      return row[0];
+      console.log('--------checking diagonals---------');
+      return `Ganador ${getPlayerNameByLetter(row[0])} (${row[0]})`;
     }
   }
 
   // check for a tie
   // check for arr completition
+  arr.map(element => {
+    if(element === ""){
+        arrIscomplete = false ;
+    }
+  })
+  if(arrIscomplete){
+    declareATie();
+      return `There is a tie!`;
+  }
+
 };
 
 const checkRowCombination = (arr) => {

@@ -58,9 +58,11 @@
         </td>
       </tr>
     </table>
+    <p id="announcement"></p>
+    <p id="gameScore"></p>
 
-    <button onclick="cleanBoard()">Limpiar Tablero</button>
-    <button onclick="checkGameStatus()">checkGameStatus()</button>
+    <button id="playAgainButton" onclick="cleanBoard()">Volver a jugar</button>
+
     <script type="text/javascript" src="tateti.js"></script>
     <script>
       const cleanBoard = () => {
@@ -81,7 +83,9 @@
             cellButton.innerText = "";
           }
         }
+        document.getElementById('announcement').innerText = "";
         randomizeStartingPlayer();
+        disableBoardButtons(false);
       };
 
       const initializeGame = () => {
@@ -91,6 +95,7 @@
         savePlayersNames(player1Name, player2Name);
 
         cleanBoard();
+        document.getElementById('playAgainButton').style.display = "block";
         randomizeStartingPlayer();
         initializePlayersWins();
       };
@@ -127,8 +132,15 @@
           `#${idCell}`
         ).innerText = getCurrentPlayer().letter;
 
-        let resultcheckGameStatus = checkGameStatus();
-        console.log("resultcheckGameStatus", resultcheckGameStatus);
+        let result = checkGameStatus();
+        if(result){
+            console.log(`i shoud update the ui with this ${result}`);
+            document.getElementById('announcement').innerText = `${result}`;
+            updateScore();
+            disableBoardButtons(true);
+
+        }
+        
         announceNextPlayer();
       };
 
@@ -143,14 +155,43 @@
       const checkGameStatus = () => {
         let cellsNodeArray = document.querySelectorAll(`#board input`);
         let gameboardArray = [];
+        
 
         for (let index = 0; index < cellsNodeArray.length; index++) {
           const cellValue = cellsNodeArray[index].value;
           gameboardArray.push(cellValue);
         }
-        console.log("gameboardArray", gameboardArray);
-        gameStatus(gameboardArray);
+        return gameStatus(gameboardArray);
       };
+
+      const disableBoardButtons = (toggleAction = false)=>{
+        if(toggleAction !== true && toggleAction !== false) return;
+        console.log('enableBoardButtons');
+
+        let boardElement = document.querySelector("#board");
+        let rowArray = boardElement.querySelectorAll("tr");
+
+        for (let rowIndex = 0; rowIndex < rowArray.length; rowIndex++) {
+          const rowElement = rowArray[rowIndex].querySelectorAll("td");
+
+          for (let colIndex = 0; colIndex < rowElement.length; colIndex++) {
+            const cellButton = rowElement[colIndex].querySelector("button");
+
+            cellButton.disabled = toggleAction;
+          }
+        }
+      }
+
+      const updateScore=()=>{
+        let gameScore = getGameScore();
+        let player1 = getPlayerData("player1");
+        let player2 = getPlayerData("player2");
+        document.getElementById('gameScore').innerText = `${player1.name} (${player1.letter}) -> ${gameScore.player1} wins
+        ${player2.name} (${player2.letter}) -> ${gameScore.player2} wins
+        ${gameScore.ties} ties`
+
+      }
+
     </script>
   </body>
 </html>
