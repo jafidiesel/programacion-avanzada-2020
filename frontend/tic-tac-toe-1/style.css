@@ -1,10 +1,7 @@
-#board button,#board p{
-    text-align: center;
+#board button {
+  width: 25px;
+  height: 25px;
 }
-#board button{
-    width: 25px;
-    height: 25px;
-}
-#playAgainButton{
-    display: none;
+#playAgainButton {
+  display: none;
 }

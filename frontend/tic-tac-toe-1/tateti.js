@@ -1,22 +1,28 @@
 const declareAWinner = (letterWinner) => {
-  if(sessionStorage.getItem('player1Letter') === letterWinner){
-    sessionStorage.setItem('player1Wins', parseInt(sessionStorage.getItem('player1Wins')) + 1);
-}else if(sessionStorage.getItem('player2Letter') === letterWinner){
-    sessionStorage.setItem('player2Wins', parseInt(sessionStorage.getItem('player2Wins')) + 1);
+  if (sessionStorage.getItem("player1Letter") === letterWinner) {
+    sessionStorage.setItem(
+      "player1Wins",
+      parseInt(sessionStorage.getItem("player1Wins")) + 1
+    );
+  } else if (sessionStorage.getItem("player2Letter") === letterWinner) {
+    sessionStorage.setItem(
+      "player2Wins",
+      parseInt(sessionStorage.getItem("player2Wins")) + 1
+    );
   }
 };
 
 const declareATie = () => {
-    sessionStorage.setItem('ties', parseInt(sessionStorage.getItem('ties')) + 1);
-}
+  sessionStorage.setItem("ties", parseInt(sessionStorage.getItem("ties")) + 1);
+};
 
 const getPlayerNameByLetter = (letter) => {
-    if(sessionStorage.getItem('player1Letter') === letter){
-        return sessionStorage.getItem('player1Name');
-    }else if(sessionStorage.getItem('player2Letter') === letter){
-        return sessionStorage.getItem('player2Name');
-      }
-}
+  if (sessionStorage.getItem("player1Letter") === letter) {
+    return sessionStorage.getItem("player1Name");
+  } else if (sessionStorage.getItem("player2Letter") === letter) {
+    return sessionStorage.getItem("player2Name");
+  }
+};
 
 const initializePlayersWins = () => {
   sessionStorage.setItem("player1Wins", 0);
@@ -58,11 +64,11 @@ const getPlayerData = (player) => {
 };
 
 const getGameScore = () => {
-    return {
-        player1: sessionStorage.getItem("player1Wins"),
-        player2: sessionStorage.getItem("player2Wins"),
-        ties: sessionStorage.getItem("ties")
-    }
+  return {
+    player1: sessionStorage.getItem("player1Wins"),
+    player2: sessionStorage.getItem("player2Wins"),
+    ties: sessionStorage.getItem("ties"),
+  };
 };
 
 const updateCurrentPlayer = (playerName, playerLetter) => {
@@ -108,7 +114,7 @@ const gameStatus = (arr) => {
   for (let index = 0; index < multiArr.length; index++) {
     const row = multiArr[index];
     if (checkRowCombination(row)) {
-        declareAWinner(row[0]);
+      declareAWinner(row[0]);
 
       return `Ganador ${getPlayerNameByLetter(row[0])} (${row[0]})`;
     }
@@ -119,7 +125,7 @@ const gameStatus = (arr) => {
   for (let index = 0; index < multiArrTransp.length; index++) {
     const row = multiArrTransp[index];
     if (checkRowCombination(row)) {
-        declareAWinner(row[0]);
+      declareAWinner(row[0]);
       return `Ganador ${getPlayerNameByLetter(row[0])} (${row[0]})`;
     }
   }
@@ -136,16 +142,15 @@ const gameStatus = (arr) => {
 
   // check for a tie
   // check for arr completition
-  arr.map(element => {
-    if(element === ""){
-        arrIscomplete = false ;
+  arr.map((element) => {
+    if (element === "") {
+      arrIscomplete = false;
     }
-  })
-  if(arrIscomplete){
+  });
+  if (arrIscomplete) {
     declareATie();
-      return `¡Empate!`;
+    return `¡Empate!`;
   }
-
 };
 
 const checkRowCombination = (arr) => {
