@@ -1,5 +1,5 @@
-#board{
-    display: none;
+#board button,#board p{
+    text-align: center;
 }
 #board button{
     width: 25px;
