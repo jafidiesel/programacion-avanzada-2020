@@ -9,6 +9,6 @@
 - Tic Tac Toe (react)
 
 ### Back-end
-- node apirest practice
-- express practice
-- express practice using express generator
+- node apirest practice (app_test)
+- express
+ - practice using express generator (expressGeneratorApp)
