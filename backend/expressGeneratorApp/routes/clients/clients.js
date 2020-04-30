@@ -7,13 +7,14 @@ router
 		res.send('GET clients');
 	})
 	.post('/', function(req,res,next){
-		res.send('POST client');
+		console.log(req.body);
+		res.send('POST client'+JSON.stringify(req.body));
 	})
 	.get('/:idClient', function(req,res,next){
 		res.send(`GET client with idClient = ${req.params.idClient}`)
 	})
 	.put('/:idClient',function(req,res,next){
-        res.send(`PUT client with idClient = ${req.params.idClient}` )
+        res.send(`PUT client with idClient = ${req.params.idClient} ${JSON.stringify(req.body)}` )
     })
     .delete('/:idClient',function(req,res,next){
         res.send(`DELETE client with idClient = ${req.params.idClient}`)
