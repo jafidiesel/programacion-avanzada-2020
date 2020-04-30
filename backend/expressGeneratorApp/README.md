@@ -1,3 +1,14 @@
+
+### How to run
+
+npm start
+
+
+### How to run in debug mode
+
+DEBUG=myapp:* npm start
+
+
 curl 127.0.0.1:3000/clients 
 curl 127.0.0.1:3000/clients/NUMERO 
 curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients -X POST 

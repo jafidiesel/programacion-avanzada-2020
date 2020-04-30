@@ -19,7 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/clients', clientsRouter);
-app.use('/clients/contracts', contractsRouter);
-app.use('/clients/contracts/:id', contractsRouter);
+//app.use('/clients/contracts', contractsRouter);
+app.use('/clients/:idClient/contracts', contractsRouter);
 
 module.exports = app;
