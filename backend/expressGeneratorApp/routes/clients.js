@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var helper = require('../helpers');
+const helper = require('../helpers/common');
 
 /* GET clients listing. */
 router

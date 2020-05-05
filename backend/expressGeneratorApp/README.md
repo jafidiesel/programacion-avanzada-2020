@@ -70,3 +70,18 @@ curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:id/contracts/:
 ```
 curl 127.0.0.1:3000/clients/:id/contracts/:id -X DELETE
 ```
+
+notas:
+
+{
+    status:,
+    msg:,
+    response: {
+
+    }
+}
+
+- instalar redis en el proyecto (usar redis de express)
+- crear clientes
+- crear contratos
+- poder consultar ambos
