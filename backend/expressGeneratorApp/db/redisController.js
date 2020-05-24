@@ -4,8 +4,7 @@ var redisClient = redis.createClient();
 const { promisify } = require("util");
 const hGetAsync = promisify(redisClient.hget).bind(redisClient);
 const keysAsync = promisify(redisClient.keys).bind(redisClient);
-
-
+const delAsync = promisify(redisClient.del).bind(redisClient);
 
 redisClient.on('connect', function() {
     console.log('Redis client connected');
@@ -64,6 +63,15 @@ const getClient = async (idClient) => {
     return client;
 }
 
+const deleteClient = async (idCLient)=>{
+    let result = await delAsync(idCLient)
+    console.log('deleteClient',result);
+    return result;
+}
+
+const putClient = (idClient, obj) =>{ 
+    redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname)   
+}
 
 /* contracts */
 
@@ -93,5 +101,7 @@ module.exports = {
     getAllClients,
     saveClient,
     getClient,
-    getAllContracts
+    getAllContracts,
+    deleteClient,
+    putClient
 }

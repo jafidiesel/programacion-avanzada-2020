@@ -82,15 +82,15 @@ curl --data '{ "name": "juan", "lastname": "sancho", "idClient": "5" }' 127.0.0.
 ```
 curl 127.0.0.1:3000/clients/:idClient -X GET -H "Content-Type: application/json"
 ```
-#### [put] a client
+#### &#x2705; [put] a client
 127.0.0.1:3000/clients/:id
 ```
-curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:id -X PUT -H "Content-Type: application/json"
+curl --data '{ "name": "juan", "lastname": "sancho panza 442" }' 127.0.0.1:3000/clients/7 -X PUT -H "Content-Type: application/json"
 ```
-#### [del] a client
+#### &#x2705; [del] a client
 127.0.0.1:3000/clients/:id
 ```
-curl 127.0.0.1:3000/clients/:id -X DELETE
+curl 127.0.0.1:3000/clients/:idClient -X DELETE
 ```
 ### */clients/:id/contracts*
 ------

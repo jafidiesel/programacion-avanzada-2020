@@ -8,6 +8,8 @@ let redisClient = redisController.redisClient;
 let saveClient = redisController.saveClient;
 let getAllClients = redisController.getAllClients;
 let getAllContracts = redisController.getAllContracts;
+let deleteClient = redisController.deleteClient;
+let putClient = redisController.putClient;
 
 
 /* GET clients listing. */
@@ -32,11 +34,17 @@ router
 			res.send( helper.buildResponse(200, 'all ok', result))
 		}
 	})
-	.put('/:idClient', function (req, res, next) {
-		res.send(helper.buildResponse(200, 'client updated', req.body))
+	.put('/:idClient', async function (req, res, next) {
+		putClient(`${req.params.idClient}`, req.body)
+		res.send( helper.buildResponse(200, 'all ok', result))
 	})
-	.delete('/:idClient', function (req, res, next) {
-		res.send(helper.buildResponse(200, 'client deleted', {}))
+	.delete('/:idClient', async function (req, res, next) {
+		let result = await deleteClient(req.params.idClient)
+		if(!result) {
+			res.send( helper.buildResponse(400, 'not ok', result))
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', result))
+		}
 	})
 	.get('/:idClient/contracts', async function (req, res, next) {
 		let contractsList = await getAllContracts(req.params.idClient);
