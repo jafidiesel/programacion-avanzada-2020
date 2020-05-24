@@ -18,8 +18,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/clients', clientsRouter);
-app.use('/clients/:idClient/contracts', clientsRouter);
-
+/* app.use('/clients/:idClient/contracts', clientsRouter);
+ */
 app.use((err, req, res, next)=>{
     handleError(err, res);
 });

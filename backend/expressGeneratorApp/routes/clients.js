@@ -6,19 +6,18 @@ const helper = require('../helpers/common');
 let redisController = require('../db/redisController');
 let redisClient = redisController.redisClient;
 let saveClient = redisController.saveClient;
+let getAllClients = redisController.getAllClients;
 
 
 /* GET clients listing. */
 router
-	.get('/', function (req, res, next) {
-		redisClient.get(`client1`, function (error, result) {
-			if (error) {
-				console.log(error);
-				throw error;
-			}
-			console.log(JSON.parse(result));
-		});
-		res.send(helper.buildResponse(200, 'all ok', { name: "juan" }));
+	.get('/', async function (req, res, next) {
+		let clientsList = await getAllClients();
+		if(!clientsList.length) {
+			res.send( helper.buildResponse(400, 'not ok', { list: clientsList }));
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', { list: clientsList }));
+		}
 	})
 	.post('/', function (req, res, next) {
 		saveClient(`${req.body.idClient}`, req.body)

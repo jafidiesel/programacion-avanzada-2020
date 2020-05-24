@@ -2,7 +2,9 @@ var redis = require('redis');
 var redisClient = redis.createClient();
 
 const { promisify } = require("util");
-const getAsync = promisify(redisClient.hget).bind(redisClient);
+const hGetAsync = promisify(redisClient.hget).bind(redisClient);
+const keysAsync = promisify(redisClient.keys).bind(redisClient);
+
 
 
 redisClient.on('connect', function() {
@@ -32,17 +34,39 @@ const getClient = async (idClient) => {
     if(isNaN(idClient)) return false;
 
     let client = {
-        name: await getAsync( `client${idClient}`, 'name'),
-        lastname: await getAsync( `client${idClient}`, 'lastname'),
-        idClient: await getAsync( `client${idClient}`, 'idClient')
+        name: await hGetAsync( `client${idClient}`, 'name'), // new Promise(redisClient.hget(id, name))
+        lastname: await hGetAsync( `client${idClient}`, 'lastname'),
+        idClient: await hGetAsync( `client${idClient}`, 'idClient')
     }
     
     return client;
+}
+
+const getAllClients = async () => {
+    let result = await keysAsync("client*");
+    if(!result.length) return [];
+
+    let clientsArray = [];
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        
+        if(!element.includes("contract")){
+            clientsArray.push({
+                name: await hGetAsync( `${element}`, 'name'),
+                lastname: await hGetAsync( `${element}`, 'lastname'),
+                idClient: await hGetAsync( `${element}`, 'idClient')
+            });
+        }
+    }
+
+    return clientsArray;
 }
 
 module.exports = {
     redisClient,
     redis,
     saveClient,
-    getClient
+    getClient,
+    getAllClients
 }
