@@ -54,7 +54,7 @@ DEBUG=myapp:* npm start
 
 ### */clients*
 ------
-#### [get] all the clients
+#### [get] all the clients &#x2705;
 127.0.0.1:3000/clients 
 ```
 curl 127.0.0.1:3000/clients 
@@ -94,7 +94,7 @@ curl 127.0.0.1:3000/clients/:id -X DELETE
 ```
 ### */clients/:id/contracts*
 ------
-#### [get] all the clients
+#### [get] all the contracts from a client
 127.0.0.1:3000/clients/:id/contracts
 ```
 curl 127.0.0.1:3000/clients/:id/contracts
