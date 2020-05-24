@@ -54,12 +54,12 @@ DEBUG=myapp:* npm start
 
 ### */clients*
 ------
-#### [get] all the clients &#x2705;
+#### &#x2705; [get] all the clients
 127.0.0.1:3000/clients 
 ```
 curl 127.0.0.1:3000/clients 
 ```
-#### [post] a client &#x2705;
+#### &#x2705; [post] a client
 127.0.0.1:3000/clients 
 
 client model:
@@ -77,7 +77,7 @@ curl --data '{ "name": "juan", "lastname": "sancho", "idClient": "5" }' 127.0.0.
 ```
 ### */clients/:id*
 ------
-#### [get] a client &#x2705;
+#### &#x2705; [get] a client
 127.0.0.1:3000/clients/:idClient
 ```
 curl 127.0.0.1:3000/clients/:idClient -X GET -H "Content-Type: application/json"
@@ -94,10 +94,10 @@ curl 127.0.0.1:3000/clients/:id -X DELETE
 ```
 ### */clients/:id/contracts*
 ------
-#### [get] all the contracts from a client
+#### &#x2705; [get] all the contracts from a client
 127.0.0.1:3000/clients/:id/contracts
 ```
-curl 127.0.0.1:3000/clients/:id/contracts
+curl 127.0.0.1:3000/clients/:idClient/contracts
 ```
 #### [post] a contract
 127.0.0.1:3000/clients/:id/contracts 
@@ -113,45 +113,23 @@ contract model:
 ```
 
 ```
-curl --data "params" 127.0.0.1:3000/clients/:id/contracts -X POST
+curl --data "params" 127.0.0.1:3000/clients/:idClient/contracts -X POST
 ```
-### */clients/:id/contracts/:id*
+### */clients/:idClient/contracts/:idContract*
 ------
 
 #### [get] a contract
-127.0.0.1:3000/clients/:id/contracts/:id
+127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-curl 127.0.0.1:3000/clients/:id/contracts/:id
+curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
 #### [put] a contract
-127.0.0.1:3000/clients/:id/contracts/:id
+127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:id/contracts/:id -X PUT
+curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:idClient/contracts/:idContract -X PUT
 ```
 #### [del] a contract
-127.0.0.1:3000/clients/:id/contracts/:id
+127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-curl 127.0.0.1:3000/clients/:id/contracts/:id -X DELETE
+curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract -X DELETE
 ```
-
-notas:
-
-{
-    status:,
-    msg:,
-    response: {
-
-    }
-}
-
-- instalar redis en el proyecto (usar redis de express)
-- crear clientes
-- crear contratos
-- poder consultar ambos
-
-- instalar mongodb
-- cerrar el proyecto con redis
-- api
-- validaciones que necesitemos
-- pensar el tateti como si quisieramos jugar con el curl
-- validar como si se pudiera jugar en una sala de a dos

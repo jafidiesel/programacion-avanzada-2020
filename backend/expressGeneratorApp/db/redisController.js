@@ -25,23 +25,7 @@ redisClient.get('redis-up-and-running', function (error, result) {
     console.log('Redis status: ' + result);
 });
 
-const saveClient = (idClient, obj)=>{
-    let result = redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname, 'idClient', obj.idClient)
-    console.log('saveClient',result);
-}
-
-const getClient = async (idClient) => {
-    if(isNaN(idClient)) return false;
-
-    let client = {
-        name: await hGetAsync( `client${idClient}`, 'name'), // new Promise(redisClient.hget(id, name))
-        lastname: await hGetAsync( `client${idClient}`, 'lastname'),
-        idClient: await hGetAsync( `client${idClient}`, 'idClient')
-    }
-    
-    return client;
-}
-
+/* clients */
 const getAllClients = async () => {
     let result = await keysAsync("client*");
     if(!result.length) return [];
@@ -63,10 +47,51 @@ const getAllClients = async () => {
     return clientsArray;
 }
 
+const saveClient = (idClient, obj)=>{
+    let result = redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname, 'idClient', obj.idClient)
+    console.log('saveClient',result);
+}
+
+const getClient = async (idClient) => {
+    if(isNaN(idClient)) return false;
+
+    let client = {
+        name: await hGetAsync( `client${idClient}`, 'name'), // new Promise(redisClient.hget(id, name))
+        lastname: await hGetAsync( `client${idClient}`, 'lastname'),
+        idClient: await hGetAsync( `client${idClient}`, 'idClient')
+    }
+    
+    return client;
+}
+
+
+/* contracts */
+
+const getAllContracts = async (idClient) => {
+    let result = await keysAsync("client*contract*");
+    if(!result.length) return [];
+
+    let contractsArray = [];
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        
+        contractsArray.push({
+            title: await hGetAsync( `${element}`, 'title'),
+            description: await hGetAsync( `${element}`, 'description'),
+            idContract: await hGetAsync( `${element}`, 'idContract')
+        });
+    
+    }
+
+    return contractsArray;
+}
+
 module.exports = {
     redisClient,
     redis,
+    getAllClients,
     saveClient,
     getClient,
-    getAllClients
+    getAllContracts
 }

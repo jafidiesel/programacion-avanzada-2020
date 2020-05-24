@@ -7,6 +7,7 @@ let redisController = require('../db/redisController');
 let redisClient = redisController.redisClient;
 let saveClient = redisController.saveClient;
 let getAllClients = redisController.getAllClients;
+let getAllContracts = redisController.getAllContracts;
 
 
 /* GET clients listing. */
@@ -37,8 +38,13 @@ router
 	.delete('/:idClient', function (req, res, next) {
 		res.send(helper.buildResponse(200, 'client deleted', {}))
 	})
-	.get('/:idClient/contracts', function (req, res, next) {
-		res.send(helper.buildResponse(200, 'all ok', { idClient: `${req.params.idClient}`}))
+	.get('/:idClient/contracts', async function (req, res, next) {
+		let contractsList = await getAllContracts(req.params.idClient);
+		if(!contractsList.length) {
+			res.send( helper.buildResponse(400, 'not ok', { list: contractsList }));
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', { list: contractsList }));
+		}
 	})
 	.post('/:idClient/contracts', function (req, res, next) {
 		res.send(helper.buildResponse(200, 'contract created', req.body))
