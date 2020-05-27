@@ -116,15 +116,15 @@ curl --data '{ "description": "contract description", "title": "contract title",
 ### */clients/:idClient/contracts/:idContract*
 ------
 
-#### [get] a contract
+#### &#x2705; [get] a contract
 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
 curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-#### [put] a contract
+#### &#x2705; [put] a contract
 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:idClient/contracts/:idContract -X PUT
+curl --data '{ "description": "contract description", "title": "contract title"}' 127.0.0.1:3000/clients/1/contracts/1 -X PUT -H "Content-Type: application/json"
 ```
 #### [del] a contract
 127.0.0.1:3000/clients/:idClient/contracts/:idContract

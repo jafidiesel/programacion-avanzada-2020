@@ -13,7 +13,7 @@ let putClient = redisController.putClient;
 let getAllContractsFromAClient = redisController.getAllContractsFromAClient;
 let saveContract = redisController.saveContract;
 let getContract = redisController.getContract;
-
+let putContract = redisController.putContract;
 
 
 /* GET clients listing. */
@@ -27,27 +27,31 @@ router
 		}
 	})
 	.post('/', function (req, res, next) {
-		saveClient(`${req.body.idClient}`, req.body)
+		saveClient(`${req.body.idClient}`, req.body);
 		res.send(helper.buildResponse(200, 'client created', req.body));
 	})
 	.get('/:idClient', async function (req, res, next) {
-		let result = await redisController.getClient(req.params.idClient)
+		let result = await redisController.getClient(req.params.idClient);
 		if(!result) {
-			res.send( helper.buildResponse(400, 'not ok', result))
+			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result))
+			res.send( helper.buildResponse(200, 'all ok', result));
 		}
 	})
 	.put('/:idClient', async function (req, res, next) {
-		putClient(`${req.params.idClient}`, req.body)
-		res.send( helper.buildResponse(200, 'all ok', result))
+		let result = await putClient(`${req.params.idClient}`, req.body);;
+		if(!result) {
+			res.send( helper.buildResponse(400, 'not ok', result));
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', result));
+		}
 	})
 	.delete('/:idClient', async function (req, res, next) {
-		let result = await deleteClient(req.params.idClient)
+		let result = await deleteClient(req.params.idClient);
 		if(!result) {
-			res.send( helper.buildResponse(400, 'not ok', result))
+			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result))
+			res.send( helper.buildResponse(200, 'all ok', result));
 		}
 	})
 	.get('/:idClient/contracts', async function (req, res, next) {
@@ -59,24 +63,28 @@ router
 		}
 	})
 	.post('/:idClient/contracts', function (req, res, next) {
-		saveContract(req.params.idClient, req.body)
-		res.send(helper.buildResponse(200, 'contract created', req.body))
+		saveContract(req.params.idClient, req.body);
+		res.send(helper.buildResponse(200, 'contract created', req.body));
 	})
 	.get('/:idClient/contracts/:idContract', async function (req, res, next) {
-		let result = await getContract(req.params.idClient, req.params.idContract)
+		let result = await getContract(req.params.idClient, req.params.idContract);
 		if(!result) {
-			res.send( helper.buildResponse(400, 'not ok', result))
+			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result))
+			res.send( helper.buildResponse(200, 'all ok', result));
 		}
 	})
-	.put('/:idClient/contracts/:idContract', function (req, res, next) {
-		/* pending */
-		res.send(helper.buildResponse(200, 'contract updated', req.body ))
+	.put('/:idClient/contracts/:idContract', async function (req, res, next) {
+		let result = await putContract(req.params.idClient, req.params.idContract, req.body);
+		if(!result) {
+			res.send( helper.buildResponse(400, 'not ok', result));
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', result));
+		}
 	})
 	.delete('/:idClient/contracts/:idContract', function (req, res, next) {
 		/* pending */
-		res.send(helper.buildResponse(200, 'contract deleted', {} ))
+		res.send(helper.buildResponse(200, 'contract deleted', {} ));
 	})
 
 

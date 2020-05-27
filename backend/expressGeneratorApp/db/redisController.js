@@ -67,8 +67,9 @@ const deleteClient = async (idCLient)=>{
     return result;
 }
 
-const putClient = (idClient, obj) =>{ 
-    redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname); 
+const putClient = async (idClient, obj) =>{ 
+    let result = await redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname); 
+    return result;
 }
 
 /* client-contracts */
@@ -108,6 +109,12 @@ const getContract = async(idClient, idContract) => {
     return contract;
 }
 
+const putContract = async (idClient, idContract, obj) =>{ 
+    console.log("idClient",idClient, "idContract",idContract, "obj",obj);
+    let result = await redisClient.hset(`client${idClient}contract${idContract}`, 'description', obj.description, 'title', obj.title);
+    return result;
+}
+
 /* contracts */
 const getAllContracts = async () => {
     let result = await keysAsync("*contract*");
@@ -140,5 +147,6 @@ module.exports = {
     getAllContracts,
     getAllContractsFromAClient,
     saveContract,
-    getContract
+    getContract,
+    putContract
 }
