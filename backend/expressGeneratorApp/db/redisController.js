@@ -3,6 +3,7 @@ var redisClient = redis.createClient();
 
 const { promisify } = require("util");
 const hGetAsync = promisify(redisClient.hget).bind(redisClient);
+const hSetAsync = promisify(redisClient.hset).bind(redisClient);
 const keysAsync = promisify(redisClient.keys).bind(redisClient);
 const delAsync = promisify(redisClient.del).bind(redisClient);
 
@@ -47,7 +48,8 @@ const getAllClients = async () => {
 }
 
 const saveClient = (idClient, obj)=>{
-    let result = redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname, 'idClient', obj.idClient)
+    let result = hSetAsync(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname, 'idClient', obj.idClient);
+    return result;
 }
 
 const getClient = async (idClient) => {
@@ -62,13 +64,13 @@ const getClient = async (idClient) => {
     return client;
 }
 
-const deleteClient = async (idCLient)=>{
-    let result = await delAsync(idCLient);
+const deleteClient = async (idClient)=>{
+    let result = delAsync(`client${idClient}`);
     return result;
 }
 
 const putClient = async (idClient, obj) =>{ 
-    let result = await redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname); 
+    let result = await hSetAsync(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname); 
     return result;
 }
 
@@ -96,7 +98,8 @@ const getAllContractsFromAClient = async (idClient) => {
 
 
 const saveContract = (idClient, obj)=>{
-    let result = redisClient.hset(`client${idClient}contract${obj.idContract}`, 'description', obj.description, 'title', obj.title, 'idContract', obj.idContract);
+    let result = hSetAsync(`client${idClient}contract${obj.idContract}`, 'description', obj.description, 'title', obj.title, 'idContract', obj.idContract);
+    return result;
 }
 
 const getContract = async(idClient, idContract) => {
@@ -110,8 +113,13 @@ const getContract = async(idClient, idContract) => {
 }
 
 const putContract = async (idClient, idContract, obj) =>{ 
-    console.log("idClient",idClient, "idContract",idContract, "obj",obj);
     let result = await redisClient.hset(`client${idClient}contract${idContract}`, 'description', obj.description, 'title', obj.title);
+    return result;
+}
+
+const deleteContract = async (idClient,idContract)=>{
+    console.log(`client${idClient}contract${idContract}`);
+    let result = await delAsync(`client${idClient}contract${idContract}`);
     return result;
 }
 
@@ -148,5 +156,6 @@ module.exports = {
     getAllContractsFromAClient,
     saveContract,
     getContract,
-    putContract
+    putContract,
+    deleteContract
 }

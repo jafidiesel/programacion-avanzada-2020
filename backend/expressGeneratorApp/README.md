@@ -126,10 +126,10 @@ curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
 curl --data '{ "description": "contract description", "title": "contract title"}' 127.0.0.1:3000/clients/1/contracts/1 -X PUT -H "Content-Type: application/json"
 ```
-#### [del] a contract
+#### &#x2705; [del] a contract
 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
-curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract -X DELETE
+curl -X DELETE localhost:3000/clients/2/contracts/1
 ```
 
 
