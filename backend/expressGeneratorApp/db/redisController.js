@@ -56,7 +56,7 @@ const getClient = async (idClient) => {
     if(isNaN(idClient)) return false;
 
     let client = {
-        name: await hGetAsync( `client${idClient}`, 'name'), // new Promise(redisClient.hget(id, name))
+        name: await hGetAsync( `client${idClient}`, 'name'),
         lastname: await hGetAsync( `client${idClient}`, 'lastname'),
         idClient: await hGetAsync( `client${idClient}`, 'idClient')
     };
@@ -118,7 +118,6 @@ const putContract = async (idClient, idContract, obj) =>{
 }
 
 const deleteContract = async (idClient,idContract)=>{
-    console.log(`client${idClient}contract${idContract}`);
     let result = await delAsync(`client${idClient}contract${idContract}`);
     return result;
 }

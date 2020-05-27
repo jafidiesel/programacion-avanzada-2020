@@ -7,14 +7,14 @@ let redisController = require('../db/redisController');
 
 let getAllContracts = redisController.getAllContracts;
 
-/* GET contracts listing. */
+/* GET contracts list */
 router
 	.get('/', async function (req, res, next) {
 		let contractsList = await getAllContracts();
 		if(!contractsList.length) {
 			res.send( helper.buildResponse(400, 'not ok', { list: contractsList }));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', { list: contractsList }));
+			res.send( helper.buildResponse(200, 'All contracts retrieved', { list: contractsList }));
 		}
 	})
 

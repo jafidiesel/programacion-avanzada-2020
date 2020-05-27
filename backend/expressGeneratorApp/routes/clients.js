@@ -17,14 +17,14 @@ let putContract = redisController.putContract;
 let deleteContract = redisController.deleteContract;
 
 
-/* GET clients listing. */
+/* clients */
 router
 	.get('/', async function (req, res, next) {
 		let clientsList = await getAllClients();
 		if(!clientsList.length) {
 			res.send( helper.buildResponse(400, 'not ok', { list: clientsList }));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', { list: clientsList }));
+			res.send( helper.buildResponse(200, 'Client list retrieved', { list: clientsList }));
 		}
 	})
 	.post('/', function (req, res, next) {
@@ -32,7 +32,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client created', result));
 		}
 	})
 	.get('/:idClient', async function (req, res, next) {
@@ -40,7 +40,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client retrieved', result));
 		}
 	})
 	.put('/:idClient', async function (req, res, next) {
@@ -48,7 +48,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client updated', result));
 		}
 	})
 	.delete('/:idClient', async function (req, res, next) {
@@ -56,7 +56,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client deleted', result));
 		}
 	})
 	.get('/:idClient/contracts', async function (req, res, next) {
@@ -64,7 +64,7 @@ router
 		if(!contractsList.length) {
 			res.send( helper.buildResponse(400, 'not ok', { list: contractsList }));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', { list: contractsList }));
+			res.send( helper.buildResponse(200, 'Client contract list retrieved', { list: contractsList }));
 		}
 	})
 	.post('/:idClient/contracts', function (req, res, next) {
@@ -72,7 +72,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client contract created', result));
 		}
 	})
 	.get('/:idClient/contracts/:idContract', async function (req, res, next) {
@@ -80,7 +80,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client contract retrieved', result));
 		}
 	})
 	.put('/:idClient/contracts/:idContract', async function (req, res, next) {
@@ -88,7 +88,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client contract updated', result));
 		}
 	})
 	.delete('/:idClient/contracts/:idContract', async function (req, res, next) {
@@ -96,7 +96,7 @@ router
 		if(!result) {
 			res.send( helper.buildResponse(400, 'not ok', result));
 		}else{
-			res.send( helper.buildResponse(200, 'all ok', result));
+			res.send( helper.buildResponse(200, 'Client contract deleted', result));
 		}
 	})
 
