@@ -57,41 +57,21 @@ const getClient = async (idClient) => {
         name: await hGetAsync( `client${idClient}`, 'name'), // new Promise(redisClient.hget(id, name))
         lastname: await hGetAsync( `client${idClient}`, 'lastname'),
         idClient: await hGetAsync( `client${idClient}`, 'idClient')
-    }
+    };
     
     return client;
 }
 
 const deleteClient = async (idCLient)=>{
-    let result = await delAsync(idCLient)
+    let result = await delAsync(idCLient);
     return result;
 }
 
 const putClient = (idClient, obj) =>{ 
-    redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname)   
+    redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname); 
 }
 
-/* contracts */
-
-const getAllContracts = async () => {
-    let result = await keysAsync("*contract*");
-    if(!result.length) return [];
-
-    let contractsArray = [];
-
-    for (let index = 0; index < result.length; index++) {
-        const element = result[index];
-        
-        contractsArray.push({
-            title: await hGetAsync( `${element}`, 'title'),
-            description: await hGetAsync( `${element}`, 'description'),
-            idContract: await hGetAsync( `${element}`, 'idContract')
-        });
-    
-    }
-
-    return contractsArray;
-}
+/* client-contracts */
 
 const getAllContractsFromAClient = async (idClient) => {
     let result = await keysAsync(`client${idClient}contract*`);
@@ -118,6 +98,37 @@ const saveContract = (idClient, obj)=>{
     let result = redisClient.hset(`client${idClient}contract${obj.idContract}`, 'description', obj.description, 'title', obj.title, 'idContract', obj.idContract);
 }
 
+const getContract = async(idClient, idContract) => {
+
+    let contract = {
+        title: await hGetAsync(`client${idClient}contract${idContract}`,'title'),
+        description: await hGetAsync(`client${idClient}contract${idContract}`, 'description' ),
+        idContract: await hGetAsync(`client${idClient}contract${idContract}`, 'idContract' )
+    };
+    return contract;
+}
+
+/* contracts */
+const getAllContracts = async () => {
+    let result = await keysAsync("*contract*");
+    if(!result.length) return [];
+
+    let contractsArray = [];
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        
+        contractsArray.push({
+            title: await hGetAsync( `${element}`, 'title'),
+            description: await hGetAsync( `${element}`, 'description'),
+            idContract: await hGetAsync( `${element}`, 'idContract')
+        });
+    
+    }
+
+    return contractsArray;
+}
+
 module.exports = {
     redisClient,
     redis,
@@ -128,5 +139,6 @@ module.exports = {
     putClient,
     getAllContracts,
     getAllContractsFromAClient,
-    saveContract
+    saveContract,
+    getContract
 }

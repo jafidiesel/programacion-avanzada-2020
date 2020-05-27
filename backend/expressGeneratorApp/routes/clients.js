@@ -12,6 +12,7 @@ let putClient = redisController.putClient;
 
 let getAllContractsFromAClient = redisController.getAllContractsFromAClient;
 let saveContract = redisController.saveContract;
+let getContract = redisController.getContract;
 
 
 
@@ -61,9 +62,13 @@ router
 		saveContract(req.params.idClient, req.body)
 		res.send(helper.buildResponse(200, 'contract created', req.body))
 	})
-	.get('/:idClient/contracts/:idContract', function (req, res, next) {
-		/* pending */
-		res.send(helper.buildResponse(200, 'all ok', { idContract: `${req.params.idContract}`}))
+	.get('/:idClient/contracts/:idContract', async function (req, res, next) {
+		let result = await getContract(req.params.idClient, req.params.idContract)
+		if(!result) {
+			res.send( helper.buildResponse(400, 'not ok', result))
+		}else{
+			res.send( helper.buildResponse(200, 'all ok', result))
+		}
 	})
 	.put('/:idClient/contracts/:idContract', function (req, res, next) {
 		/* pending */
