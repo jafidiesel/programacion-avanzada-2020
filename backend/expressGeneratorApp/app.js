@@ -5,6 +5,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var clientsRouter = require('./routes/clients');
+var contractRouter = require('./routes/contracts');
 
 const { handleError } = require('./helpers/error');
 
@@ -18,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/clients', clientsRouter);
+app.use('/contracts', contractRouter);
 /* app.use('/clients/:idClient/contracts', clientsRouter);
  */
 app.use((err, req, res, next)=>{

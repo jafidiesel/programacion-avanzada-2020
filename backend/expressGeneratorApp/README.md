@@ -50,10 +50,8 @@ DEBUG=myapp:* npm start
 
 # API documentation 
 
-## Routes
+# */clients*
 
-### */clients*
-------
 #### &#x2705; [get] all the clients
 127.0.0.1:3000/clients 
 ```
@@ -99,7 +97,7 @@ curl 127.0.0.1:3000/clients/:idClient -X DELETE
 ```
 curl 127.0.0.1:3000/clients/:idClient/contracts
 ```
-#### [post] a contract
+#### &#x2705; [post] a contract
 127.0.0.1:3000/clients/:id/contracts 
 
 contract model:
@@ -113,7 +111,7 @@ contract model:
 ```
 
 ```
-curl --data "params" 127.0.0.1:3000/clients/:idClient/contracts -X POST
+curl --data '{ "description": "contract description", "title": "contract title", "idContract": "1" }' 127.0.0.1:3000/clients/1/contracts -X POST -H "Content-Type: application/json"
 ```
 ### */clients/:idClient/contracts/:idContract*
 ------
@@ -132,4 +130,13 @@ curl --data "param1=value1&param2=value2" 127.0.0.1:3000/clients/:idClient/contr
 127.0.0.1:3000/clients/:idClient/contracts/:idContract
 ```
 curl 127.0.0.1:3000/clients/:idClient/contracts/:idContract -X DELETE
+```
+
+
+# */contracts*
+
+#### &#x2705; [get] all the contracts
+127.0.0.1:3000/contracts 
+```
+curl 127.0.0.1:3000/contracts 
 ```

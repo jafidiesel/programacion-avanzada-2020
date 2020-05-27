@@ -48,7 +48,6 @@ const getAllClients = async () => {
 
 const saveClient = (idClient, obj)=>{
     let result = redisClient.hset(`client${idClient}`, 'name', obj.name, 'lastname', obj.lastname, 'idClient', obj.idClient)
-    console.log('saveClient',result);
 }
 
 const getClient = async (idClient) => {
@@ -65,7 +64,6 @@ const getClient = async (idClient) => {
 
 const deleteClient = async (idCLient)=>{
     let result = await delAsync(idCLient)
-    console.log('deleteClient',result);
     return result;
 }
 
@@ -75,8 +73,8 @@ const putClient = (idClient, obj) =>{
 
 /* contracts */
 
-const getAllContracts = async (idClient) => {
-    let result = await keysAsync("client*contract*");
+const getAllContracts = async () => {
+    let result = await keysAsync("*contract*");
     if(!result.length) return [];
 
     let contractsArray = [];
@@ -95,13 +93,40 @@ const getAllContracts = async (idClient) => {
     return contractsArray;
 }
 
+const getAllContractsFromAClient = async (idClient) => {
+    let result = await keysAsync(`client${idClient}contract*`);
+    if(!result.length) return [];
+
+    let contractsArray = [];
+
+    for (let index = 0; index < result.length; index++) {
+        const element = result[index];
+        
+        contractsArray.push({
+            title: await hGetAsync( `${element}`, 'title'),
+            description: await hGetAsync( `${element}`, 'description'),
+            idContract: await hGetAsync( `${element}`, 'idContract')
+        });
+    
+    }
+
+    return contractsArray;
+}
+
+
+const saveContract = (idClient, obj)=>{
+    let result = redisClient.hset(`client${idClient}contract${obj.idContract}`, 'description', obj.description, 'title', obj.title, 'idContract', obj.idContract);
+}
+
 module.exports = {
     redisClient,
     redis,
     getAllClients,
     saveClient,
     getClient,
-    getAllContracts,
     deleteClient,
-    putClient
+    putClient,
+    getAllContracts,
+    getAllContractsFromAClient,
+    saveContract
 }

@@ -4,12 +4,15 @@ let router = express.Router();
 const helper = require('../helpers/common');
 
 let redisController = require('../db/redisController');
-let redisClient = redisController.redisClient;
+
 let saveClient = redisController.saveClient;
 let getAllClients = redisController.getAllClients;
-let getAllContracts = redisController.getAllContracts;
 let deleteClient = redisController.deleteClient;
 let putClient = redisController.putClient;
+
+let getAllContractsFromAClient = redisController.getAllContractsFromAClient;
+let saveContract = redisController.saveContract;
+
 
 
 /* GET clients listing. */
@@ -47,7 +50,7 @@ router
 		}
 	})
 	.get('/:idClient/contracts', async function (req, res, next) {
-		let contractsList = await getAllContracts(req.params.idClient);
+		let contractsList = await getAllContractsFromAClient(req.params.idClient);
 		if(!contractsList.length) {
 			res.send( helper.buildResponse(400, 'not ok', { list: contractsList }));
 		}else{
@@ -55,15 +58,19 @@ router
 		}
 	})
 	.post('/:idClient/contracts', function (req, res, next) {
+		saveContract(req.params.idClient, req.body)
 		res.send(helper.buildResponse(200, 'contract created', req.body))
 	})
 	.get('/:idClient/contracts/:idContract', function (req, res, next) {
+		/* pending */
 		res.send(helper.buildResponse(200, 'all ok', { idContract: `${req.params.idContract}`}))
 	})
 	.put('/:idClient/contracts/:idContract', function (req, res, next) {
+		/* pending */
 		res.send(helper.buildResponse(200, 'contract updated', req.body ))
 	})
 	.delete('/:idClient/contracts/:idContract', function (req, res, next) {
+		/* pending */
 		res.send(helper.buildResponse(200, 'contract deleted', {} ))
 	})
 
