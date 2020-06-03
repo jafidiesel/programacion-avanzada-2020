@@ -16,14 +16,14 @@
 ## How to run redis with docker
 --------------------
 ```
-docker run -p 6379:6379 --name redis-instance redis
+docker run -p 6379:6379 redis
 ```
 
 
 #### How to log in the "redis-instance" container just created
 
 ```
-docker exec -it redis-instance bash
+docker exec -it redis-container-name bash
 ```
 
 Inside the container run the redis-cli with:
@@ -40,9 +40,6 @@ To check out redis commands go [here](https://redis.io/commands)
 npm start
 ```
 
-### How to run in debug mode
-
-DEBUG=myapp:* npm start
 
 -------------------
 ---------------
@@ -78,12 +75,12 @@ curl --data '{ "name": "juan", "lastname": "sancho", "idClient": "5" }' 127.0.0.
 #### &#x2705; [get] a client
 127.0.0.1:3000/clients/:idClient
 ```
-curl 127.0.0.1:3000/clients/:idClient -X GET -H "Content-Type: application/json"
+curl 127.0.0.1:3000/clients/3 -X GET -H "Content-Type: application/json"
 ```
 #### &#x2705; [put] a client
 127.0.0.1:3000/clients/:id
 ```
-curl --data '{ "name": "juan", "lastname": "sancho panza 442" }' 127.0.0.1:3000/clients/7 -X PUT -H "Content-Type: application/json"
+curl --data '{ "name": "juan", "lastname": "sancho panza 442" }' 127.0.0.1:3000/clients/3 -X PUT -H "Content-Type: application/json"
 ```
 #### &#x2705; [del] a client
 127.0.0.1:3000/clients/:id
