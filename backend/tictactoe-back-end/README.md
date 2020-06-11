@@ -44,6 +44,210 @@ npm start
 -------------------
 ---------------
 
+# Data 
 
-# API documentation 
 
+Campaign 1->* Board
+
+Campaign: -> campaign#0
+- hash: string
+- namePlayer1: string
+- symbolPlayer1: string
+- scorePlayer1: int
+- namePlayer2: string
+- symbolPlayer2: string
+- scorePlayer2: int
+- ties: int
+- nextPlayer: string
+- lastBoard: int
+
+Board: -> board#0campaign#0
+- cell0: string
+- cell1: string
+- cell2: string
+- cell3: string
+- cell4: string
+- cell5: string
+- cell6: string
+- cell7: string
+- cell8: string
+
+-----------
+
+controller(routes) -> serviceX
+serviceX -> repositoryX + repositoryY + ...
+
+
+# API documentation
+
+### _[POST]_ new game
+- url: `/new`
+- Create a new game and it returns the game hash
+- body: `{ namePlayer: string }`
+- Success: { 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+ }
+
+### _POST_ Join to a game
+- url: `/:hash/join`
+- Join to an existing game
+- body: { namePlayer: string }
+- Notes:
+ - If the second player have never joined, it will allow the creation of the second player with the name entered.
+ - Once the second player joins, players must remember their names to re-join later.
+- Success: { hash: string }
+
+### _[POST]_ place a symbol in a cell
+- url: `/:hash/position/:cell`
+- body: `{ namePlayer: string }`
+- Success1: 
+ ```
+{ 
+    status: int,
+    message: "correctly placed",
+    data: {
+        hash: string
+    }
+ }
+```
+- Success2:
+``` 
+{ 
+    status: int,
+    message: "correctly placed, game won!",
+    data: {
+        hash: string
+    }
+}
+```
+- Success3:
+```
+{ 
+    status: int,
+    message: "occupied cell",
+    data: {
+        hash: string
+    }
+}
+```
+- Error: 
+```
+{ 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+}
+```
+
+### _[GET]_ get game status
+- url: `/:hash/status`
+- Success1: 
+```
+{   
+    status: int,
+    message: string,
+    data:{
+        players: {
+            {
+                namePlayer1: string,
+                symbolPlayer1: string
+            },
+            {
+                namePlayer2: string,
+                symbolPlayer2: string
+            }
+        },
+        board:{
+            idBoard: int,
+            cell1: string,
+            ...
+            ...
+            cell8: string
+        }
+        game: {
+            nextPlayer: string
+        }
+    }
+}
+```
+- Error: 
+```
+{ 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+}
+```
+
+### _[GET]_ get scoreboard
+- url: `/:hash/scoreboard`
+- Success1: 
+```
+{   
+    status: int,
+    message: string,
+    data:{
+        scorePlayer1: int,
+        namePlayer1:string,
+        scorePlayer2: int,
+        namePlayer2:string,
+        ties: int
+    }
+}
+```
+- Error: 
+```
+{ 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+}
+```
+
+### _[GET]_ historical boards data
+- url: `/:hash/history-boards`
+- Success1: 
+```
+{   
+    status: int,
+    message: string,
+    data:{
+        boards: [
+            {
+                idBoard: int,
+                cell1: string,
+                ...
+                ...
+                cell8: string
+            },
+            {
+                idBoard: int,
+                cell1: string,
+                ...
+                ...
+                cell8: string
+            }
+        ]
+    }
+}
+```
+- Error: 
+```
+{ 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+}
+```
