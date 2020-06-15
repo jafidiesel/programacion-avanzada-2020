@@ -80,9 +80,9 @@ serviceX -> repositoryX + repositoryY + ...
 
 # API documentation
 
-### _[POST]_ new game
-- url: `/new`
-- Create a new game and it returns the game hash
+### _[POST]_ new campaign
+- url: `campaign/new`
+- Create a new campaign and it returns the campaign hash
 - body: `{ namePlayer: string }`
 - Success: { 
     status: int,
@@ -92,9 +92,9 @@ serviceX -> repositoryX + repositoryY + ...
     }
  }
 
-### _POST_ Join to a game
-- url: `/:hash/join`
-- Join to an existing game
+### _POST_ Join to a campaign
+- url: `/campaign/:hash/join`
+- Join to an existing campaign
 - body: { namePlayer: string }
 - Notes:
  - If the second player have never joined, it will allow the creation of the second player with the name entered.
@@ -102,7 +102,7 @@ serviceX -> repositoryX + repositoryY + ...
 - Success: { hash: string }
 
 ### _[POST]_ place a symbol in a cell
-- url: `/:hash/position/:cell`
+- url: `/campaign/:hash/position/:cell`
 - body: `{ namePlayer: string }`
 - Success1: 
  ```
@@ -118,7 +118,7 @@ serviceX -> repositoryX + repositoryY + ...
 ``` 
 { 
     status: int,
-    message: "correctly placed, game won!",
+    message: "correctly placed, campaign won!",
     data: {
         hash: string
     }
@@ -145,8 +145,8 @@ serviceX -> repositoryX + repositoryY + ...
 }
 ```
 
-### _[GET]_ get game status
-- url: `/:hash/status`
+### _[GET]_ get campaign status
+- url: `/campaign/:hash/status`
 - Success1: 
 ```
 {   
@@ -170,7 +170,7 @@ serviceX -> repositoryX + repositoryY + ...
             ...
             cell8: string
         }
-        game: {
+        campaign: {
             nextPlayer: string
         }
     }
@@ -187,8 +187,8 @@ serviceX -> repositoryX + repositoryY + ...
 }
 ```
 
-### _[GET]_ get scoreboard
-- url: `/:hash/scoreboard`
+### _[GET]_ get score
+- url: `/campaign/:hash/score`
 - Success1: 
 ```
 {   
@@ -215,7 +215,7 @@ serviceX -> repositoryX + repositoryY + ...
 ```
 
 ### _[GET]_ historical boards data
-- url: `/:hash/history-boards`
+- url: `/campaign/:hash/history-board`
 - Success1: 
 ```
 {   
