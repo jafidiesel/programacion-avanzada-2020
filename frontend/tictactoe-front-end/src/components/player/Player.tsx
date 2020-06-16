@@ -1,9 +1,18 @@
 import React, { Fragment } from 'react';
 
-function Player() {
+interface PlayerProps{
+    name: string,
+    symbol: string
+}
+
+function Player( {name, symbol}:PlayerProps ) {
 
     return (
-       <p>Player</p>
+        <Fragment>
+            <p>Player's name: {name}</p>
+            <p>Player's symbol: {symbol}</p>
+
+        </Fragment>
     );
 }
 
