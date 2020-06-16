@@ -1,13 +1,16 @@
 import React, { Fragment } from 'react';
 import './App.css';
-import Welcome from 'components/welcome/Welcome';
-import Board from 'components/board/Board';
+import { BrowserRouter } from 'react-router-dom';
+import NavBar from 'components/navbar/NavBar';
+import Router from 'components/router/Router';
 
 function App() {
   return (
     <Fragment>
-      <Welcome/>
-      <Board />
+      <BrowserRouter>
+        <NavBar />
+        <Router />
+      </BrowserRouter>
     </Fragment>
   );
 }
