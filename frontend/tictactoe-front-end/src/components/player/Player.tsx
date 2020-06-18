@@ -9,9 +9,14 @@ function Player( {name, symbol}:PlayerProps ) {
 
     return (
         <Fragment>
-            <p>Player's name: {name}</p>
-            <p>Player's symbol: {symbol}</p>
-
+            {name && symbol ? 
+                (<div>
+                    <p>Player's name: {name}</p>
+                    <p>Player's symbol: {symbol}</p>
+                </div>)
+                :
+                <p>Esperando jugador 2..</p>
+            }
         </Fragment>
     );
 }
