@@ -10,6 +10,9 @@ router
             console.log("/new");
             
             let result = await campaignService.newCampaign(req.body);
+
+            console.log("result ->",result);
+            
             if(!result){
                 res.send( buildResponse(400, "Error",{}))
             }else{
@@ -18,7 +21,6 @@ router
         } catch (error) {
             next(error)
         }
-        //res.send(campaignService.newCampaign());
     })
     .post('/:hash/join', function(req, res, next) {
         // campaignService.join(req.body)

@@ -11,7 +11,6 @@ const newCampaign = async (body) => {
     lastcampaignId = await redisService.getLastId('campaignId')
     actualCampaignId = parseInt(lastcampaignId)+1
 
-    console.log('actualCampaignId',actualCampaignId)
     campaignModel.setCampaign({
         idCampaign: actualCampaignId,
         hash: newHash,
@@ -19,8 +18,6 @@ const newCampaign = async (body) => {
         symbolPlayer1: "X"
     })
 
-
-    console.log(JSON.stringify(campaignModel.getCampaign()));
  
     await campaignRepository.save(campaignModel.getCampaign())
     await redisService.saveHash(newHash, actualCampaignId)
