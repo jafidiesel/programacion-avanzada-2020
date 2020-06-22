@@ -1,12 +1,24 @@
 let express = require('express');
 let router = express.Router();
 let campaignService = require('../services/campaign.service')
-
+let buildResponse = require('../helpers/common').buildResponse
 
 /* /campaign */
 router
-    .post('/new', function(req,res,next){
-        res.send(campaignService.newCampaign());
+    .post('/new', async function(req,res,next){
+        try {
+            console.log("/new");
+            
+            let result = await campaignService.newCampaign(req.body);
+            if(!result){
+                res.send( buildResponse(400, "Error",{}))
+            }else{
+                res.send( buildResponse(200, "Success",result))
+            }
+        } catch (error) {
+            next(error)
+        }
+        //res.send(campaignService.newCampaign());
     })
     .post('/:hash/join', function(req, res, next) {
         // campaignService.join(req.body)

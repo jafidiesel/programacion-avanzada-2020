@@ -1,22 +1,37 @@
 const campaignModel = require('../models/campaign.model')
 const commonHelper = require('../helpers/common')
+const redisService =  require('./redis.service');
+const campaignRepository = require('../repositories/campaign.repository')
 
-const newCampaign = () => {
-    let newHash = commonHelper.hashGenerator();
 
+const newCampaign = async (body) => {
+    let newHash = commonHelper.hashGenerator(body.namePlayer);
+
+    //new campaign
+    lastcampaignId = await redisService.getLastId('campaignId')
+    actualCampaignId = parseInt(lastcampaignId)+1
+
+    console.log('actualCampaignId',actualCampaignId)
     campaignModel.setCampaign({
+        idCampaign: actualCampaignId,
         hash: newHash,
-        namePlayer1: "namePlayer1",
+        namePlayer1: body.namePlayer,
         symbolPlayer1: "X"
     })
+
+
     console.log(JSON.stringify(campaignModel.getCampaign()));
+ 
+    await campaignRepository.save(campaignModel.getCampaign())
+    await redisService.saveHash(newHash, actualCampaignId)
+
+    await redisService.setLastId('campaignId')
+
     
     return {
         status: 200,
         message: 'Campaign created.',
-        data: {
-            hash: campaignModel.getCampaign().hash
-        }
+        data: campaignModel.getCampaign()
     };
 }
 

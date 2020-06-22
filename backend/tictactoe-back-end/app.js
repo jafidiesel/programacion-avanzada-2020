@@ -6,6 +6,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var campaignController = require('./routes/campaign.controller');
 
+let handleError = require('./helpers/error').handleError
+
 var app = express();
 
 app.use(logger('dev'));
@@ -16,5 +18,26 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/campaign', campaignController);
+
+
+app.use((err, req, res, next) => {
+    //err.isServer
+    console.log("handleError");
+    
+    let result = handleError(err, res) ;
+    result.send(result.body)
+    next()
+  });
+
+const redis = require("redis");
+const client = redis.createClient();
+   
+client.on("error", function(error) {
+    console.error(error);
+});
+
+client.set("redis-up", "value", redis.print);
+client.get("redis-up", redis.print);
+  
 
 module.exports = app;

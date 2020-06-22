@@ -11,7 +11,7 @@
 ## How to Install docker
 --------------------
 
-[Docker documentation here](https://docs.docker.com/engine/install/)
+[Docker documentation here](https://docs.docker.com/engine/install/ubuntu/)
 
 ## How to run redis with docker
 --------------------
