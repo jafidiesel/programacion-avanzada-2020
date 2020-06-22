@@ -6,8 +6,8 @@ import Campaign from 'pages/campaign/Campaign';
 function Router() {
   return (
     <Switch>
+      <Route exact path="/" component={Welcome} />
       <Route exact path="/campaign/:hash" component={Campaign} />
-      <Route exact path="/welcome" component={Welcome} />
     </Switch>
   );
 }
