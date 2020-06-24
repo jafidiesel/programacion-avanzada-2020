@@ -1,14 +1,5 @@
-let redis = require('redis');
-let redisClient = redis.createClient();
-
-redisClient.on('connect', function() {
-    console.log('Redis client connected');
-});
-
-redisClient.on('error', function (err) {
-    console.log('Something went wrong ' + err);
-});
-
+let redisController = require('../db/redisController'); 
+let redisClient = redisController.redisClient; 
 
 const { promisify } = require("util");
 const getKeyAsync = promisify(redisClient.get).bind(redisClient);

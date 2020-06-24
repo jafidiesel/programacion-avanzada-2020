@@ -7,13 +7,11 @@ let buildResponse = require('../helpers/common').buildResponse
 router
     .post('/new', async function(req,res,next){
         try {
-            console.log("/new");
             
             let result = await campaignService.newCampaign(req.body);
-
-            console.log("result ->",result);
             
             if(!result){
+                res.statusCode = 400;
                 res.send( buildResponse(400, "Error",{}))
             }else{
                 res.send( buildResponse(200, "Success",result))
@@ -25,17 +23,17 @@ router
     .post('/:hash/join', async function(req, res, next) {
         // campaignService.join(req.body)
         try {
-            let result = await campaignService.joinCampaign(req.params.hash,req.body)
+            let result = await campaignService.joinCampaign(req.params.hash,req.body);
+            
             if(!result) {
-                res.send( msgResponse.buildResponse(400, 'Error', result))
+                res.statusCode = 400;
+                res.send( buildResponse(400, 'Error', {}))
             }else{
-                res.send( msgResponse.buildResponse(200, 'Ok', result))
+                res.send( buildResponse(200, result.message, result.data))
             }
-            next()
         } catch (error) {
             next(error)
         }
-        //res.send(req.params.hash);
     })
     .get('/:hash/status', async function(req, res, next) {
         //  get campaign status
@@ -43,6 +41,7 @@ router
             let result = await campaignService.getCampaignStatus(req.params.hash);
             
             if(!result){
+                res.statusCode = 400;
                 res.send( buildResponse(400, "Error",{}));
             }else{
                 res.send( buildResponse(200, "Success",result));

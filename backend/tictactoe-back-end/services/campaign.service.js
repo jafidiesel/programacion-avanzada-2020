@@ -17,33 +17,39 @@ const newCampaign = async (body) => {
         namePlayer1: body.namePlayer,
         symbolPlayer1: "X"
     })
- 
+
     await campaignRepository.save(campaignByModel);
     await redisService.saveHash(newHash, actualCampaignId);
 
-    await redisService.setLastId('campaignId')
+    await redisService.setLastId('campaignId');
 
     
     return {
         status: 200,
         message: 'Campaign created.',
-        data: campaignByModel
+        data: await campaignRepository.findById(actualCampaignId)
     };
 }
 
-const joinCampaign = (hash, body) => {
-    campaignModel.setCampaign({
-        namePlayer2: body.namePlayer,
-        symbolPlayer1: "O"
-    })
-    console.log(JSON.stringify(campaignModel.getCampaign()));
+const joinCampaign = async (hash, body) => {
+    let campaignId = await redisService.getByHash(hash);
+
+    let rawCampaign = await campaignRepository.findById(campaignId);
+
+    let campaignByModel = await campaignModel.getCampaign(rawCampaign);
     
+    // Check if there's a second player already playing
+    if(campaignByModel.namePlayer2) return { message: "There're already two players in this campaign. No more room to join more players."};
+    
+    campaignByModel.idCampaign = campaignId;
+    campaignByModel.symbolPlayer2 = "0";
+    campaignByModel.namePlayer2 = body.namePlayer;
+    
+    await campaignRepository.save(campaignByModel)
+
     return {
-        status: 200,
-        message: 'Campaign joined.',
-        data: {
-            hash: campaignModel.getCampaign().hash
-        }
+        message: 'Player 2 joined.',
+        data: await campaignRepository.findById(campaignId)
     };
 }
 
