@@ -22,9 +22,20 @@ router
             next(error)
         }
     })
-    .post('/:hash/join', function(req, res, next) {
+    .post('/:hash/join', async function(req, res, next) {
         // campaignService.join(req.body)
-        res.send(req.params.hash);
+        try {
+            let result = await campaignService.joinCampaign(req.params.hash,req.body)
+            if(!result) {
+                res.send( msgResponse.buildResponse(400, 'Error', result))
+            }else{
+                res.send( msgResponse.buildResponse(200, 'Ok', result))
+            }
+            next()
+        } catch (error) {
+            next(error)
+        }
+        //res.send(req.params.hash);
     })
     .get('/:hash/status', async function(req, res, next) {
         //  get campaign status

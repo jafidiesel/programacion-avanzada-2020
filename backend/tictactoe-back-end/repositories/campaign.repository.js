@@ -17,7 +17,7 @@ const getAllAsync = promisify(redisClient.hgetall).bind(redisClient);
 const existAsync = promisify(redisClient.exists).bind(redisClient);
 
 const save = async(obj)=>{
-    let resulSet = await redisClient.hset(`campaign${obj.idCampaign}`, 'namePlayer1', obj.namePlayer1, 'symbolPlayer1', obj.symbolPlayer1,'scorePlayer1', obj.scorePlayer1,'namePlayer2', obj.namePlayer2, 'symbolPlayer2', obj.symbolPlayer2,'scorePlayer2', obj.scorePlayer2, 'ties', obj.ties);
+    let resulSet = await redisClient.hset(`campaign${obj.idCampaign}`, 'namePlayer1', obj.namePlayer1, 'symbolPlayer1', obj.symbolPlayer1,'scorePlayer1', obj.scorePlayer1,'namePlayer2', obj.namePlayer2, 'symbolPlayer2', obj.symbolPlayer2,'scorePlayer2', obj.scorePlayer2, 'ties', obj.lastBoard, 'ties', obj.lastBoard);
     return resulSet;
 }
 

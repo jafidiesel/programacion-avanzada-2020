@@ -54,7 +54,6 @@ const getCampaignStatus = async (hash) => {
 
     let campaignByModel = await campaignModel.getCampaign(rawCampaign);
 
-    
     let data = {
         players:[
             {
@@ -78,12 +77,13 @@ const getCampaignStatus = async (hash) => {
             cell8: ""
         },
         campaign: {
-            nextPlayer: campaignByModel.nextPlayer
+            nextPlayer: campaignByModel.nextPlayer,
+            lastBoard: campaignByModel.lastBoard
         },
         score:{
             scorePlayer1: campaignByModel.scorePlayer1,
             scorePlayer2: campaignByModel.scorePlayer2,
-            ties: campaignByModel.ties,
+            ties: campaignByModel.ties
         }
     }
 
@@ -94,5 +94,6 @@ const getCampaignStatus = async (hash) => {
 
 module.exports = {
     newCampaign,
+    joinCampaign,
     getCampaignStatus
 }

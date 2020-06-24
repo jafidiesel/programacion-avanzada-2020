@@ -102,7 +102,7 @@ serviceX -> repositoryX + repositoryY + ...
 - Success: { hash: string }
 
 ### _[POST]_ place a symbol in a cell
-- url: `/campaign/:hash/position/:cell`
+- url: `/campaign/:hash/cell/:cell`
 - body: `{ namePlayer: string }`
 - Success1: 
  ```
@@ -171,7 +171,8 @@ serviceX -> repositoryX + repositoryY + ...
             cell8: string
         }
         campaign: {
-            nextPlayer: string
+            nextPlayer: string,
+            lastBoard: int
         },
         score:{
             scorePlayer1: number,

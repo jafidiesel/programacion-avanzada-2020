@@ -9,6 +9,7 @@ let campaign = {
     scorePlayer2: "",
     ties: "",
     nextPlayer: "",
+    lastBoard: 0
 }
 
 const setCampaign = async(obj) =>{
@@ -23,6 +24,7 @@ const setCampaign = async(obj) =>{
     campaign.scorePlayer2  = obj.scorePlayer2 ? obj.scorePlayer2 : campaign.scorePlayer2;
     campaign.ties = obj.ties ? obj.ties : campaign.ties;
     campaign.nextPlayer = obj.nextPlayer ? obj.nextPlayer : campaign.nextPlayer;
+    campaign.lastBoard = obj.lastBoard ? obj.lastBoard : campaign.lastBoard;
 
     return campaign;
 }
