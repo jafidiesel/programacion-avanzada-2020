@@ -11,7 +11,8 @@ let campaign = {
     nextPlayer: "",
 }
 
-const setCampaign = (obj) =>{
+const setCampaign = async(obj) =>{
+    
     campaign.idCampaign  = obj.idCampaign ? obj.idCampaign : campaign.idCampaign;
     campaign.hash  = obj.hash ? obj.hash : campaign.hash;
     campaign.namePlayer1  = obj.namePlayer1 ? obj.namePlayer1 : campaign.namePlayer1;
@@ -22,9 +23,13 @@ const setCampaign = (obj) =>{
     campaign.scorePlayer2  = obj.scorePlayer2 ? obj.scorePlayer2 : campaign.scorePlayer2;
     campaign.ties = obj.ties ? obj.ties : campaign.ties;
     campaign.nextPlayer = obj.nextPlayer ? obj.nextPlayer : campaign.nextPlayer;
+
+    return campaign;
 }
 
-const getCampaign = (hash) => campaign;
+const getCampaign = (obj) => {
+    return setCampaign(obj);
+}
 
 
 module.exports = {

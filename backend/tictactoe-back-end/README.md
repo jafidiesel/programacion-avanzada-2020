@@ -172,6 +172,11 @@ serviceX -> repositoryX + repositoryY + ...
         }
         campaign: {
             nextPlayer: string
+        },
+        score:{
+            scorePlayer1: number,
+            scorePlayer2: number,
+            ties: number,
         }
     }
 }
@@ -187,34 +192,8 @@ serviceX -> repositoryX + repositoryY + ...
 }
 ```
 
-### _[GET]_ get score
-- url: `/campaign/:hash/score`
-- Success1: 
-```
-{   
-    status: int,
-    message: string,
-    data:{
-        scorePlayer1: int,
-        namePlayer1:string,
-        scorePlayer2: int,
-        namePlayer2:string,
-        ties: int
-    }
-}
-```
-- Error: 
-```
-{ 
-    status: int,
-    message: string,
-    data: {
-        hash: string
-    }
-}
-```
 
-### _[GET]_ historical boards data
+### _[GET]_ historical boards data (optional - TBD)
 - url: `/campaign/:hash/history-board`
 - Success1: 
 ```

@@ -22,9 +22,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  res.header("Access-Control-Allow-Methods", "POST");
   next();
 });
+
 
 app.use('/', indexRouter);
 app.use('/campaign', campaignController);
@@ -46,8 +48,5 @@ client.on("error", function(error) {
     console.error(error);
 });
 
-client.set("redis-up", "value", redis.print);
-client.get("redis-up", redis.print);
-  
 
 module.exports = app;

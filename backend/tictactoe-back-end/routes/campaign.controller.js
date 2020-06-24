@@ -26,8 +26,19 @@ router
         // campaignService.join(req.body)
         res.send(req.params.hash);
     })
-    .get('/:hash/status', function(req, res, next) {
-        res.send(req.params.hash);
+    .get('/:hash/status', async function(req, res, next) {
+        //  get campaign status
+        try {
+            let result = await campaignService.getCampaignStatus(req.params.hash);
+            
+            if(!result){
+                res.send( buildResponse(400, "Error",{}));
+            }else{
+                res.send( buildResponse(200, "Success",result));
+            }
+        } catch (error) {
+            next(error);
+        }
     })
     .get('/:hash/score', function(req, res, next) {
         res.send(req.params.hash);
