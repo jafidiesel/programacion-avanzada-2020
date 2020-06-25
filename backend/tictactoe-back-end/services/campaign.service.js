@@ -117,10 +117,12 @@ const getCampaignStatus = async (hash) => {
 }
 
 
-const placeCell = async(hash) => {
+const placeCell = async(hash, cell, body) => {
     let campaignByModel = await getCampaignByHash(hash);
 
-    boardService.createBoard();
+    console.log("idCampaign", campaignByModel.idCampaign);
+    
+    boardService.placeCell(campaignByModel, cell, body);
 
 
 }
