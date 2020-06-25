@@ -27,7 +27,10 @@ const newCampaign = async (body) => {
     return {
         status: 200,
         message: 'Campaign created.',
-        data: await campaignRepository.findById(actualCampaignId)
+        data: {
+            hash: newHash,
+            campaigh: await campaignRepository.findById(actualCampaignId)
+        }
     };
 }
 
