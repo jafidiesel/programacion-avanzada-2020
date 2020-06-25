@@ -74,13 +74,14 @@ Board: -> board#0campaign#0
 
 -----------
 
-controller(routes) -> serviceX
-serviceX -> repositoryX + repositoryY + ...
+controller(routes) -> service
+service -> model
+service -> repository
 
 
 # API documentation
 
-### _[POST]_ new campaign
+### &#x2705; _[POST]_ new campaign
 - url: `campaign/new`
 - Create a new campaign and it returns the campaign hash
 - body: `{ namePlayer: string }`
@@ -92,7 +93,7 @@ serviceX -> repositoryX + repositoryY + ...
     }
  }
 
-### _POST_ Join to a campaign
+### &#x2705; _POST_ Join to a campaign
 - url: `/campaign/:hash/join`
 - Join to an existing campaign
 - body: { namePlayer: string }

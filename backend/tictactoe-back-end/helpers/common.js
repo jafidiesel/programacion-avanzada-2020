@@ -10,6 +10,6 @@ module.exports = {
     
     },
     hashGenerator : (player_name) => {
-        return crypto.createHash('md5').update(player_name).digest('hex');
+        return crypto.createHash('md5').update(player_name + Math.random() ).digest('hex');
     }
 }

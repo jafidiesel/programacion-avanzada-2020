@@ -50,17 +50,25 @@ router
             next(error);
         }
     })
-    .get('/:hash/score', function(req, res, next) {
-        res.send(req.params.hash);
-    })
     .get('/:hash/history-board', function(req, res, next) {
         res.send(req.params.hash);
     })
-    .post('/:hash/position/:cell', function(req, res, next) {
-        res.send(req.params.cell);
-    })
-    .post('/:hash/join', function(req, res, next) {
-        res.send(req.params.hash);
+    .post('/:hash/cell/:cell', async function(req, res, next) {
+        //  get campaign status
+        try {
+            let result = await campaignService.placeCell(req.params.hash);
+            
+            if(!result){
+                res.statusCode = 400;
+                res.send( buildResponse(400, "Error",{}));
+            }else{
+                res.send( buildResponse(200, "Success",result));
+            }
+        } catch (error) {
+            next(error);
+        }
+
+        //res.send(req.params.cell);
     })
 
 module.exports = router;

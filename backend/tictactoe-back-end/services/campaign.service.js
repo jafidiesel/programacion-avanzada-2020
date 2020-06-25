@@ -2,7 +2,17 @@ const campaignModel = require('../models/campaign.model')
 const commonHelper = require('../helpers/common')
 const redisService =  require('./redis.service');
 const campaignRepository = require('../repositories/campaign.repository')
+const boardService = require('./board.service') ;
 
+const getCampaignByHash = async(hash) => {
+    let campaignId = await redisService.getByHash(hash);
+
+    let rawCampaign = await campaignRepository.findById(campaignId);
+
+    let campaignByModel = await campaignModel.getCampaign(rawCampaign);
+
+    return campaignByModel;
+}
 
 const newCampaign = async (body) => {
     let newHash = commonHelper.hashGenerator(body.namePlayer);
@@ -35,33 +45,39 @@ const newCampaign = async (body) => {
 }
 
 const joinCampaign = async (hash, body) => {
-    let campaignId = await redisService.getByHash(hash);
 
-    let rawCampaign = await campaignRepository.findById(campaignId);
+    let idCampaign = await redisService.getByHash(hash);
+
+    let rawCampaign = await campaignRepository.findById(idCampaign);
 
     let campaignByModel = await campaignModel.getCampaign(rawCampaign);
     
     // Check if there's a second player already playing
     if(campaignByModel.namePlayer2) return { message: "There're already two players in this campaign. No more room to join more players."};
     
-    campaignByModel.idCampaign = campaignId;
-    campaignByModel.symbolPlayer2 = "0";
-    campaignByModel.namePlayer2 = body.namePlayer;
-    
-    await campaignRepository.save(campaignByModel)
+    // create the first board of the campaign
+    let boardCreated = await boardService.createBoard(0, idCampaign);
+    if(boardCreated){
+        console.log("board created");
+        
+        campaignByModel.idCampaign = idCampaign;
+        campaignByModel.symbolPlayer2 = "0";
+        campaignByModel.namePlayer2 = body.namePlayer;
+        campaignByModel.lastBoard = 0;
+        campaignByModel.nextPlayer = Math.random() > 0.5 ? campaignByModel.namePlayer1 : campaignByModel.namePlayer2;
+        
+        await campaignRepository.save(campaignByModel);
+        
+    }
 
     return {
         message: 'Player 2 joined.',
-        data: await campaignRepository.findById(campaignId)
+        data: await campaignRepository.findById(idCampaign)
     };
 }
 
 const getCampaignStatus = async (hash) => {
-    let campaignId = await redisService.getByHash(hash);
-
-    let rawCampaign = await campaignRepository.findById(campaignId);
-
-    let campaignByModel = await campaignModel.getCampaign(rawCampaign);
+    let campaignByModel = await getCampaignByHash(hash);
 
     let data = {
         players:[
@@ -74,8 +90,9 @@ const getCampaignStatus = async (hash) => {
                 symbolPlayer2: campaignByModel.symbolPlayer2
             }
         ],
-        board:{
+        boards:[{
             idBoard: 0,
+            cell0: "",
             cell1: "",
             cell2: "",
             cell3: "",
@@ -84,7 +101,7 @@ const getCampaignStatus = async (hash) => {
             cell6: "",
             cell7: "",
             cell8: ""
-        },
+        }],
         campaign: {
             nextPlayer: campaignByModel.nextPlayer,
             lastBoard: campaignByModel.lastBoard
@@ -100,9 +117,17 @@ const getCampaignStatus = async (hash) => {
 }
 
 
+const placeCell = async(hash) => {
+    let campaignByModel = await getCampaignByHash(hash);
+
+    boardService.createBoard();
+
+
+}
 
 module.exports = {
     newCampaign,
     joinCampaign,
-    getCampaignStatus
+    getCampaignStatus,
+    placeCell
 }
