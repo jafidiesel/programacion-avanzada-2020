@@ -142,7 +142,7 @@ const placeCell = async(hash, cell, body) => {
 
     console.log("responsePlaceCell",responsePlaceCell);
     
-    if(responsePlaceCell){
+    if(responsePlaceCell.statusCode === 200){
         console.log("campaignByModel->",campaignByModel);
         
         console.log("campaignByModel.nextPlayer === campaignByModel.namePlayer1",campaignByModel.nextPlayer === campaignByModel.namePlayer1);

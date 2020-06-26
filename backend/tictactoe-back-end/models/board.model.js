@@ -2,6 +2,7 @@ const setBoard = async(obj) =>{
 
     let board={
         idBoard: 0,
+        cell0: "",
         cell1: "",
         cell2: "",
         cell3: "",
@@ -10,10 +11,10 @@ const setBoard = async(obj) =>{
         cell6: "",
         cell7: "",
         cell8: "",
-        cell9: "",
     }
     
     board.idBoard  = obj.idBoard ? obj.idBoard : board.idBoard;
+    board.cell0  = obj.cell0 ? obj.cell0 : board.cell0;
     board.cell1  = obj.cell1 ? obj.cell1 : board.cell1;
     board.cell2  = obj.cell2 ? obj.cell2 : board.cell2;
     board.cell3  = obj.cell3 ? obj.cell3 : board.cell3;
@@ -22,7 +23,6 @@ const setBoard = async(obj) =>{
     board.cell6 = obj.cell6 ? obj.cell6 : board.cell6;
     board.cell7  = obj.cell7 ? obj.cell7 : board.cell7;
     board.cell8 = obj.cell8 ? obj.cell8 : board.cell8;
-    board.cell9 = obj.cell9 ? obj.cell9 : board.cell9;
     
     return board;
 }

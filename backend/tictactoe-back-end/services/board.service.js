@@ -11,13 +11,11 @@ const placeCell = async(campaign, idCampaign, cell, body) => {
     console.log("placeCell", "campaign", campaign, "cell", cell,"body", body);
     
 
-    if(campaign.nextPlayer !== body.namePlayer){
-        return {
+    if(campaign.nextPlayer !== body.namePlayer) return {
             statusCode: 400,
             message: `It's ${campaign.nextPlayer} turn. Not yours!`,
             data: {}
         }
-    }
 
     let symbolToUse = body.namePlayer === campaign.namePlayer1 ? campaign.symbolPlayer1 : campaign.symbolPlayer2;
     console.log("symbolToUse",symbolToUse);
@@ -39,6 +37,14 @@ const placeCell = async(campaign, idCampaign, cell, body) => {
     board[`cell${cell}`] = symbolToUse;
 
     await boardRepository.saveBoard(idBoard,idCampaign,  board);
+
+    // check combinations
+
+    let boardArray = commonHelper.objectBoardToArray(board);
+    console.log("this was boardArray");
+    
+
+
     
     console.log("board updated", await boardRepository.findById(idBoard, idCampaign));
     
