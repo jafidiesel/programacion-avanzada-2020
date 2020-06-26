@@ -12,7 +12,8 @@ const existAsync = promisify(redisClient.exists).bind(redisClient);
 const newBoard = async(idBoard, idCampaign)=>{
     
     let resulSet = await hSetAsync(`board${idBoard}campaign${idCampaign}`, 'idBoard', idBoard, 'cell0', '', 'cell1', '', 'cell2', '', 'cell3', '', 'cell4', '', 'cell5', '', 'cell6', '', 'cell7', '', 'cell8', '' );
-
+    console.log("newBoard", "resulSet",resulSet);
+    
     return resulSet;
 }
 

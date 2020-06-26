@@ -5,13 +5,13 @@ const setCampaign = async(obj) =>{
         hash: "",
         namePlayer1: "",
         symbolPlayer1: "",
-        scorePlayer1: "",
+        scorePlayer1: 0,
         namePlayer2: "",
         symbolPlayer2: "",
-        scorePlayer2: "",
-        ties: "",
+        scorePlayer2: 0,
+        ties: 0,
         nextPlayer: "",
-        lastBoard: 0
+        lastBoard: ""
     }
     
     data.idCampaign  = obj.idCampaign ? obj.idCampaign : data.idCampaign;

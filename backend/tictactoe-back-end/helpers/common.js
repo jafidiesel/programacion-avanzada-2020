@@ -28,5 +28,33 @@ module.exports = {
         console.log("objectBoardToArray","boardArray",boardArray);
 
         return boardArray;
+    },
+    checkRowCombination : (arr) => {
+        if (arr[0] === "") return false;
+        for (let index = 1; index < arr.length; index++) {
+            if (arr[0] !== arr[index]) return false;
+        }
+        return true;
+    },
+    transposeMat : (mat) => {
+        for (let i = 0; i < mat.length; i++) {
+        for (let j = 0; j < i; j++) {
+            const tmp = mat[i][j];
+            mat[i][j] = mat[j][i];
+            mat[j][i] = tmp;
+        }
+        }
+        return mat;
+    },
+    extractDiagonals : (mat) => {
+        let diagonalElements = [];
+        let diagonalInvertedElements = [];
+        for (let index = 0; index < mat.length; index++) {
+            const element = mat[index][index];
+            const elementInverted = mat[mat.length - index - 1][index];
+            diagonalElements.push(element);
+            diagonalInvertedElements.push(elementInverted);
+        }
+        return [diagonalElements, diagonalInvertedElements];
     }
 }

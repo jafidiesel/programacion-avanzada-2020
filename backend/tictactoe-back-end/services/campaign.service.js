@@ -1,6 +1,7 @@
 const campaignModel = require('../models/campaign.model')
 const commonHelper = require('../helpers/common')
 const redisService =  require('./redis.service');
+const boardRepository = require('../repositories/board.repository')
 const campaignRepository = require('../repositories/campaign.repository')
 const boardService = require('./board.service') ;
 
@@ -88,6 +89,8 @@ const joinCampaign = async (hash, body) => {
 const getCampaignStatus = async (hash) => {
     let campaignByModel = await getCampaignByHash(hash);
 
+    let rawBoard = await boardRepository.findById(campaignByModel.lastBoard, campaignByModel.idCampaign);
+
     let data = {
         players:[
             {
@@ -99,18 +102,7 @@ const getCampaignStatus = async (hash) => {
                 symbolPlayer2: campaignByModel.symbolPlayer2
             }
         ],
-        boards:[{
-            idBoard: 0,
-            cell0: "",
-            cell1: "",
-            cell2: "",
-            cell3: "",
-            cell4: "",
-            cell5: "",
-            cell6: "",
-            cell7: "",
-            cell8: ""
-        }],
+        lastBoard:[rawBoard],
         campaign: {
             nextPlayer: campaignByModel.nextPlayer,
             lastBoard: campaignByModel.lastBoard
@@ -136,16 +128,10 @@ const placeCell = async(hash, cell, body) => {
     let idCampaign = await redisService.getByHash(hash);
     campaignByModel.idCampaign = idCampaign;
 
-    console.log("idCampaign", campaignByModel.idCampaign);
-    
     let responsePlaceCell = await boardService.placeCell(campaignByModel, idCampaign, cell, body);
 
-    console.log("responsePlaceCell",responsePlaceCell);
-    
     if(responsePlaceCell.statusCode === 200){
-        console.log("campaignByModel->",campaignByModel);
-        
-        console.log("campaignByModel.nextPlayer === campaignByModel.namePlayer1",campaignByModel.nextPlayer === campaignByModel.namePlayer1);
+        campaignByModel = await getCampaignByHash(hash);
         
         if(campaignByModel.nextPlayer == campaignByModel.namePlayer1){
             campaignByModel.nextPlayer = campaignByModel.namePlayer2;    
@@ -153,11 +139,7 @@ const placeCell = async(hash, cell, body) => {
             campaignByModel.nextPlayer = campaignByModel.namePlayer1;    
         }
 
-        console.log("CampaignByModel with new nextPlayer value-> ", campaignByModel);
-        
         let responseSaveCampaign = await campaignRepository.save(campaignByModel);
-        console.log("responseSaveCampaign",responseSaveCampaign);
-        
     }
 
     return responsePlaceCell;
