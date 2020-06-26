@@ -78,10 +78,29 @@ controller(routes) -> service
 service -> model
 service -> repository
 
+--------
+# How to play
+
+1. new campaign
+2. join player number 2 
+3. get status campaign
+4. set position
+
+
+----
+
 
 # API documentation
 
 ### &#x2705; _[POST]_ new campaign
+```
+curl --location --request POST 'localhost:3000/campaign/new' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "namePlayer": "jafi"
+}'
+```
+
 - url: `campaign/new`
 - Create a new campaign and it returns the campaign hash
 - body: `{ namePlayer: string }`
@@ -93,60 +112,11 @@ service -> repository
     }
  }
 
-### &#x2705; _POST_ Join to a campaign
-- url: `/campaign/:hash/join`
-- Join to an existing campaign
-- body: { namePlayer: string }
-- Notes:
- - If the second player have never joined, it will allow the creation of the second player with the name entered.
- - Once the second player joins, players must remember their names to re-join later.
-- Success: { hash: string }
-
-### _[POST]_ place a symbol in a cell
-- url: `/campaign/:hash/cell/:cell`
-- body: `{ namePlayer: string }`
-- Success1: 
- ```
-{ 
-    status: int,
-    message: "correctly placed",
-    data: {
-        hash: string
-    }
- }
+### &#x2705; _[GET]_ get campaign status
 ```
-- Success2:
-``` 
-{ 
-    status: int,
-    message: "correctly placed, campaign won!",
-    data: {
-        hash: string
-    }
-}
+curl --location --request GET 'localhost:3000/campaign/236c0a957badee4b9fc3f2c0c8d86547/status' \
+--header 'Content-Type: application/json' 
 ```
-- Success3:
-```
-{ 
-    status: int,
-    message: "occupied cell",
-    data: {
-        hash: string
-    }
-}
-```
-- Error: 
-```
-{ 
-    status: int,
-    message: string,
-    data: {
-        hash: string
-    }
-}
-```
-
-### _[GET]_ get campaign status
 - url: `/campaign/:hash/status`
 - Success1: 
 ```
@@ -194,6 +164,75 @@ service -> repository
 }
 ```
 
+### &#x2705; _POST_ Join to a campaign
+```
+curl --location --request POST 'localhost:3000/campaign/236c0a957badee4b9fc3f2c0c8d86547/join' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "namePlayer": "juan"
+}'
+```
+
+- url: `/campaign/:hash/join`
+- Join to an existing campaign
+- body: `{ namePlayer: string }`
+- Notes:
+ - If the second player have never joined, it will allow the creation of the second player with the name entered.
+ - Once the second player joins, players must remember their names to re-join later.
+- Success: { hash: string }
+
+### &#x2705; _[POST]_ place a symbol in a cell
+```
+curl --location --request POST 'localhost:3000/campaign/236c0a957badee4b9fc3f2c0c8d86547/cell/8' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "namePlayer": "jafi"
+}'
+```
+
+- url: `/campaign/:hash/cell/:cell`
+- body: `{ namePlayer: string }`
+- Success1: 
+ ```
+{ 
+    status: int,
+    message: "correctly placed",
+    data: {
+        hash: string
+    }
+ }
+```
+- Success2:
+``` 
+{ 
+    status: int,
+    message: "correctly placed, campaign won!",
+    data: {
+        hash: string
+    }
+}
+```
+- Success3:
+```
+{ 
+    status: int,
+    message: "occupied cell",
+    data: {
+        hash: string
+    }
+}
+```
+- Error: 
+```
+{ 
+    status: int,
+    message: string,
+    data: {
+        hash: string
+    }
+}
+```
+------------------------------------------------
 
 ### _[GET]_ historical boards data (optional - TBD)
 - url: `/campaign/:hash/history-board`
