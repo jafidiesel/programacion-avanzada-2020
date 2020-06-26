@@ -35,7 +35,7 @@ const newCampaign = async (body) => {
 
     
     return {
-        status: 200,
+        statusCode: 200,
         message: 'Campaign created.',
         data: {
             hash: newHash,
@@ -55,7 +55,13 @@ const joinCampaign = async (hash, body) => {
     let campaignByModel = await campaignModel.getCampaign(rawCampaign);
     
     // Check if there's a second player already playing
-    if(campaignByModel.namePlayer2) return { message: "There're already two players in this campaign. No more room to join more players."};
+    if(campaignByModel.namePlayer2){
+        return {
+            statusCode: 400,
+            message: "There're already two players in this campaign. No more room to join more players.",
+            data:{}
+        }
+    }
     
     // create the first board of the campaign
     let boardCreated = await boardService.createBoard(0, idCampaign);
@@ -73,6 +79,7 @@ const joinCampaign = async (hash, body) => {
     }
 
     return {
+        statusCode: 200,
         message: 'Player 2 joined.',
         data: await campaignRepository.findById(idCampaign)
     };
@@ -115,7 +122,11 @@ const getCampaignStatus = async (hash) => {
         }
     }
 
-    return data;
+    return {
+        statusCode: 200,
+        message: "Status.",
+        data: data
+    };
 }
 
 

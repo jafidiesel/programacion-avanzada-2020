@@ -11,7 +11,13 @@ const placeCell = async(campaign, idCampaign, cell, body) => {
     console.log("placeCell", "campaign", campaign, "cell", cell,"body", body);
     
 
-    if(campaign.nextPlayer !== body.namePlayer) return ;
+    if(campaign.nextPlayer !== body.namePlayer){
+        return {
+            statusCode: 400,
+            message: `It's ${campaign.nextPlayer} turn. Not yours!`,
+            data: {}
+        }
+    }
 
     let symbolToUse = body.namePlayer === campaign.namePlayer1 ? campaign.symbolPlayer1 : campaign.symbolPlayer2;
     console.log("symbolToUse",symbolToUse);
@@ -23,7 +29,11 @@ const placeCell = async(campaign, idCampaign, cell, body) => {
     let cellToPosition = board[`cell${cell}`];
     console.log("cellToPosition",cellToPosition);
     
-    if(cellToPosition !== '') return;
+    if(cellToPosition !== '') return {
+        statusCode: 400,
+        message: `Cell${cell} it's already occupied.`,
+        data: {}
+    }
     console.log("guardar valor de la celda");
 
     board[`cell${cell}`] = symbolToUse;
@@ -32,14 +42,18 @@ const placeCell = async(campaign, idCampaign, cell, body) => {
     
     console.log("board updated", await boardRepository.findById(idBoard, idCampaign));
     
-    return await boardRepository.findById(idBoard, idCampaign);
+    return {
+        statusCode: 200,
+        message: `Cell${cell} placed correctly!`,
+        data: await boardRepository.findById(idBoard, idCampaign)
+    };
     /* 
     teniendo la campaña:
-        chequear si body.namePlayer === nextPlayer
-        obtener el lastBoard
-        traer el board
-        chequear la celda:
-            - si esta vacia, chequear (guardar Board) y corroborar wins
+        /-chequear si body.namePlayer === nextPlayer
+        /-obtener el lastBoard
+        /-traer el board
+        /-chequear la celda:
+            /-- si esta vacia, chequear (guardar Board) y corroborar wins
                 -en caso de win or tie:
                     - actualizar score
                     - crear nuevo tablero y actualizarlo en lastBoard

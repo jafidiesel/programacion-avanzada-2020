@@ -10,11 +10,13 @@ router
             
             let result = await campaignService.newCampaign(req.body);
             
-            if(!result){
-                res.statusCode = 400;
-                res.send( buildResponse(400, "Error",{}))
+            if(result && result.statusCode == 400){
+                res.statusCode = result.statusCode;
+                res.send( buildResponse(result.statusCode, result.message, result.data));
+            }else if(result && result.statusCode == 200){
+                res.send( buildResponse(result.statusCode, result.message, result.data));
             }else{
-                res.send( buildResponse(200, "Success",result))
+                next();
             }
         } catch (error) {
             next(error)
@@ -25,11 +27,13 @@ router
         try {
             let result = await campaignService.joinCampaign(req.params.hash,req.body);
             
-            if(!result) {
-                res.statusCode = 400;
-                res.send( buildResponse(400, 'Error', {}))
+            if(result && result.statusCode == 400){
+                res.statusCode = result.statusCode;
+                res.send( buildResponse(result.statusCode, result.message, result.data));
+            }else if(result && result.statusCode == 200){
+                res.send( buildResponse(result.statusCode, result.message, result.data));
             }else{
-                res.send( buildResponse(200, result.message, result.data))
+                next();
             }
         } catch (error) {
             next(error)
@@ -40,29 +44,34 @@ router
         try {
             let result = await campaignService.getCampaignStatus(req.params.hash);
             
-            if(!result){
-                res.statusCode = 400;
-                res.send( buildResponse(400, "Error",{}));
+            if(result && result.statusCode == 400){
+                res.statusCode = result.statusCode;
+                res.send( buildResponse(result.statusCode, result.message, result.data));
+            }else if(result && result.statusCode == 200){
+                res.send( buildResponse(result.statusCode, result.message, result.data));
             }else{
-                res.send( buildResponse(200, "Success",result));
+                next();
             }
         } catch (error) {
             next(error);
         }
     })
     .get('/:hash/history-board', function(req, res, next) {
-        res.send(req.params.hash);
+        res.status = 500;
+        res.send(buildResponse(500, "Endpoint not implemented. It's optional yet.",{}));
     })
     .post('/:hash/cell/:cell', async function(req, res, next) {
         //  get campaign status
         try {
             let result = await campaignService.placeCell(req.params.hash, req.params.cell, req.body);
             
-            if(!result){
-                res.statusCode = 400;
-                res.send( buildResponse(400, "Error",{}));
+            if(result && result.statusCode == 400){
+                res.statusCode = result.statusCode;
+                res.send( buildResponse(result.statusCode, result.message, result.data));
+            }else if(result && result.statusCode == 200){
+                res.send( buildResponse(result.statusCode, result.message,result.data));
             }else{
-                res.send( buildResponse(200, "Success",result));
+                next();
             }
         } catch (error) {
             next(error);
