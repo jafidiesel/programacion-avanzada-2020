@@ -56,7 +56,7 @@ router
     .post('/:hash/cell/:cell', async function(req, res, next) {
         //  get campaign status
         try {
-            let result = await campaignService.placeCell(req.params.hash);
+            let result = await campaignService.placeCell(req.params.hash, req.params.cell, req.body);
             
             if(!result){
                 res.statusCode = 400;
@@ -67,8 +67,6 @@ router
         } catch (error) {
             next(error);
         }
-
-        //res.send(req.params.cell);
     })
 
 module.exports = router;

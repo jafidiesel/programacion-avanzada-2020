@@ -49,7 +49,7 @@ npm start
 
 Campaign 1->* Board
 
-Campaign: -> campaign#0
+Campaign: -> campaign0
 - hash: string
 - namePlayer1: string
 - symbolPlayer1: string
@@ -61,7 +61,7 @@ Campaign: -> campaign#0
 - nextPlayer: string
 - lastBoard: int
 
-Board: -> board#0campaign#0
+Board: -> board0campaign0
 - cell0: string
 - cell1: string
 - cell2: string

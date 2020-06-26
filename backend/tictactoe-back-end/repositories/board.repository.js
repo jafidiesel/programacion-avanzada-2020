@@ -20,8 +20,12 @@ const del = async() =>{
 
 }
 
-const findById = async(id) =>{
-    return await getAllAsync(`board${id}`);
+const findById = async(idBoard, idCampaign) =>{
+    return await getAllAsync(`board${idBoard}campaign${idCampaign}`);
+}
+
+const saveBoard = async(idBoard, idCampaign, board) => {
+    return await hSetAsync(`board${idBoard}campaign${idCampaign}`, 'idBoard', idBoard, 'cell0', board.cell0, 'cell1', board.cell1, 'cell2', board.cell2, 'cell3', board.cell3, 'cell4', board.cell4, 'cell5', board.cell5, 'cell6', board.cell6, 'cell7', board.cell7, 'cell8', board.cell8 );
 }
 
 const findAll = async() =>{
@@ -30,5 +34,6 @@ const findAll = async() =>{
 
 module.exports = {
     newBoard,
-    findById
+    findById,
+    saveBoard
 }

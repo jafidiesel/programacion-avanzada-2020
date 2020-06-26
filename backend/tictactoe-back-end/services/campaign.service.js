@@ -5,9 +5,9 @@ const campaignRepository = require('../repositories/campaign.repository')
 const boardService = require('./board.service') ;
 
 const getCampaignByHash = async(hash) => {
-    let campaignId = await redisService.getByHash(hash);
+    let idCampaign = await redisService.getByHash(hash);
 
-    let rawCampaign = await campaignRepository.findById(campaignId);
+    let rawCampaign = await campaignRepository.findById(idCampaign);
 
     let campaignByModel = await campaignModel.getCampaign(rawCampaign);
 
@@ -39,7 +39,7 @@ const newCampaign = async (body) => {
         message: 'Campaign created.',
         data: {
             hash: newHash,
-            campaigh: await campaignRepository.findById(actualCampaignId)
+            campaign: await campaignRepository.findById(actualCampaignId)
         }
     };
 }
@@ -49,6 +49,8 @@ const joinCampaign = async (hash, body) => {
     let idCampaign = await redisService.getByHash(hash);
 
     let rawCampaign = await campaignRepository.findById(idCampaign);
+    console.log("joinCampaign","rawCampaign",rawCampaign);
+    
 
     let campaignByModel = await campaignModel.getCampaign(rawCampaign);
     
@@ -119,11 +121,35 @@ const getCampaignStatus = async (hash) => {
 
 const placeCell = async(hash, cell, body) => {
     let campaignByModel = await getCampaignByHash(hash);
+    
+    let idCampaign = await redisService.getByHash(hash);
+    campaignByModel.idCampaign = idCampaign;
 
     console.log("idCampaign", campaignByModel.idCampaign);
     
-    boardService.placeCell(campaignByModel, cell, body);
+    let responsePlaceCell = await boardService.placeCell(campaignByModel, idCampaign, cell, body);
 
+    console.log("responsePlaceCell",responsePlaceCell);
+    
+    if(responsePlaceCell){
+        console.log("campaignByModel->",campaignByModel);
+        
+        console.log("campaignByModel.nextPlayer === campaignByModel.namePlayer1",campaignByModel.nextPlayer === campaignByModel.namePlayer1);
+        
+        if(campaignByModel.nextPlayer == campaignByModel.namePlayer1){
+            campaignByModel.nextPlayer = campaignByModel.namePlayer2;    
+        }else{
+            campaignByModel.nextPlayer = campaignByModel.namePlayer1;    
+        }
+
+        console.log("CampaignByModel with new nextPlayer value-> ", campaignByModel);
+        
+        let responseSaveCampaign = await campaignRepository.save(campaignByModel);
+        console.log("responseSaveCampaign",responseSaveCampaign);
+        
+    }
+
+    return responsePlaceCell;
 
 }
 
