@@ -20,16 +20,21 @@
 - Express
 - Error handling
 - Redis with docker
-- url: /backend/expressGeneratorApp
+- url: [/backend/expressGeneratorApp](https://github.com/jafidiesel/programacion-avanzada-2020/tree/master/backend/expressGeneratorApp)
 
-#### Tic Tac Toe 2 (front-end pending)
-- Front-end
-- React
-
-#### Tic Tac Toe 2 API REST ( back-end pending)
+#### &#x2705; Tic Tac Toe 2 API REST ( back-end)
 - Back-end
 - Node
 - Express
 - Error handling
 - Redis with docker
-- url: /backend/tictactoe-back-end
+- url: [/backend/tictactoe-back-end](https://github.com/jafidiesel/programacion-avanzada-2020/tree/master/backend/tictactoe-back-end)
+
+
+#### Tic Tac Toe 2 (front-end pending)
+- Front-end
+- React
+
+### Pets project (back & front pending)
+- Node
+- React
