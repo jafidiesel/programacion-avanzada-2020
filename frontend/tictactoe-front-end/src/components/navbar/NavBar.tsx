@@ -1,13 +1,35 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-function NavBar() {
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import './NavBar.scss';
+
+interface INavBarProps {
+  campaignHash: string;
+  handleCampaignHash(event:any): void;
+  joinCampaign(): void;
+}
+
+function NavBar( props: INavBarProps) {
   return (
-    <Fragment>
-        <Link to="/"> home</Link>
-        <Link to="/campaign"> campaign</Link>
-        <Link to="/welcome"> welcome page</Link>
-    </Fragment>
+    <Navbar bg="dark" expand="lg" className="navbar">
+      <Navbar.Brand className="navbar-brand">Tic-Tac-Toe</Navbar.Brand>
+      <Nav className="ml-auto mr-2 navbar-link scale-animation">
+        <Link to="/">
+          New Campaign
+        </Link>
+      </Nav>
+      <Form inline>
+        <FormControl
+          type="text"
+          placeholder="Enter game hash..."
+          className="mx-sm-4 input-hash scale-animation"
+          value={props.campaignHash}
+          onChange={props.handleCampaignHash}
+        />
+        <Button variant="outline-success" onClick={ props.joinCampaign }>Join a game</Button>
+      </Form>
+    </Navbar>
   );
 }
 

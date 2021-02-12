@@ -1,0 +1,42 @@
+.navbar{
+    span.navbar-brand{
+        color: lightblue;
+        font-weight: bolder;
+        transition-timing-function: ease-in;
+        transition: 0.5s;
+
+        &:hover{
+            color: lightblue;
+            transform: scale(1.2) translateX(10px);
+            transition-timing-function: ease-out;
+            transition: 0.5s;
+        }
+    }
+    .navbar-link a{
+        color: lightblue;
+        font-weight: bolder;
+        padding: 10px;
+        transition-timing-function: ease-in;
+        transition: 0.5s;
+        border-radius: 5px;
+        border: 1px solid lightblue;
+        
+        &:hover{
+            border: 1px solid lightblue;
+            background-color: lightblue;
+            color: #fff;
+            text-decoration-line: none;
+            transition-timing-function: ease-out;
+            transition: 0.5s;
+        }
+    }
+    .input-hash{
+        transition-timing-function: ease-in;
+        transition: 0.5s;
+        &:hover{
+            transition-timing-function: ease-out;
+            transition: 0.5s;
+            transform: scale(1.1);
+        }
+    }
+}

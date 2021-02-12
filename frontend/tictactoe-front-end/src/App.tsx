@@ -1,15 +1,13 @@
 import React, { Fragment } from 'react';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
-import NavBar from 'components/navbar/NavBar';
-import Router from 'components/router/Router';
+import Initialize from 'components/initialize/Initialize';
 
 function App() {
   return (
     <Fragment>
       <BrowserRouter>
-        <NavBar />
-        <Router />
+        <Initialize />
       </BrowserRouter>
     </Fragment>
   );

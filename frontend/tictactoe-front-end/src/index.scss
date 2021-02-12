@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.scale-animation{
+  transition-timing-function: ease-in;
+  transition: 0.5s;
+  &:hover{
+    transition-timing-function: ease-out;
+    transition: 0.5s;
+    transform: scale(1.1);
+  }
+}
