@@ -20,12 +20,12 @@
         transition: 0.5s;
         border-radius: 5px;
         border: 1px solid lightblue;
+        text-decoration-line: none;
         
         &:hover{
             border: 1px solid lightblue;
             background-color: lightblue;
             color: #fff;
-            text-decoration-line: none;
             transition-timing-function: ease-out;
             transition: 0.5s;
         }

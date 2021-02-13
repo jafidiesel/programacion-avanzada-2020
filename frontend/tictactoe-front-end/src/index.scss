@@ -21,3 +21,31 @@ code {
     transform: scale(1.1);
   }
 }
+
+.secondary-button{
+  color: lightblue !important;
+  background-color: #343a40 !important;
+  font-weight: bolder;
+  transition-timing-function: ease-in;
+  transition: 0.5s;
+  border-radius: 5px;
+  border: 1px solid lightblue !important;
+  text-decoration-line: none;
+  &:hover{
+    border: 1px solid lightblue !important;
+    background-color: lightblue !important;
+    color: #343a40 !important;
+    transition-timing-function: ease-out;
+    transition: 0.5s;
+    a {
+      text-decoration: none;
+      color: #343a40 !important;
+      font-weight: bolder;
+    }
+  }
+  a {
+    text-decoration: none;
+    color: lightblue !important;
+    font-weight: bolder;
+  }
+}

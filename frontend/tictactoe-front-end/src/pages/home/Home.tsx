@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Container, Row, Col } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
 import './Home.scss';
 
 const onClickHandle = (event:any)=>{
@@ -24,11 +24,12 @@ function Home() {
             },
             body: JSON.stringify({ namePlayer: namePlayer })
         })
-            .then((data:any) => {
-                console.log(data);
-                console.log(data.data.hash);
-                setHash(data.data.hash)
-            } )
+            .then( res => res.json())
+            .then((res:any) => {
+                console.log(res.data);
+                console.log(res.data?.hash);
+                setHash(res.data.hash);
+            })
             .catch(error => console.log(error) )
     }
 
@@ -36,29 +37,43 @@ function Home() {
         <Container className="main-container">
             <Row>
                 <Col xs="12">
-                    <Card>
+                    <Card className="main-card">
+                        <Card.Title className="text-left pt-2 pl-4 pb-0">New Campaign</Card.Title>
                         <Card.Body>
-                            <label>
-                                Nombre: 
-                                <input type="text" value={namePlayer} onChange={updateNamePlayer}/>
-                            </label>
-                            <button
-                                onClick={getHash}
-                            >fetch</button>
-                            <p>{process.env.REACT_APP_API_URL}</p>
-                            <button
-                                onClick={onClickHandle}>
-                                    <Link to={{
-                                        pathname:`/campaign/${hash}`,
-                                        state: {
-                                            namePlayer: namePlayer,
-                                        }
-                                    }} >
-                                        ¡Comenzar partida!
-                                    </Link>
-                                </button>
-                            <p>{namePlayer}</p>
-                            <p>{hash}</p>
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    placeholder="Your name"
+                                    aria-label="Your name"
+                                    aria-describedby="basic-addon2"
+                                    value={namePlayer}
+                                    onChange={updateNamePlayer}
+                                />
+                                <InputGroup.Append>
+                                    <Button
+                                        onClick={getHash}
+                                        variant="secondary"
+                                        className="scale-animation"
+                                    >
+                                        Create game
+                                    </Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                            { namePlayer && <p><b>Your name:</b> {namePlayer}</p>}
+                            { hash && <p><b>Your game hash:</b> {hash}</p>}
+                            { hash && <p>Remember to share your game hash ({hash}) with your 2nd player</p>}
+                            <Button
+                                onClick={onClickHandle}
+                                className="secondary-button scale-animation"
+                            >
+                                <Link to={{
+                                    pathname:`/campaign/${hash}`,
+                                    state: {
+                                        namePlayer: namePlayer,
+                                    }
+                                }} >
+                                    ¡Comenzar partida!
+                                </Link>
+                            </Button>
                         </Card.Body>
                     </Card>
                 </Col>

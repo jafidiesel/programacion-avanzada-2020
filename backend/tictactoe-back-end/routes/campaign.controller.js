@@ -9,9 +9,10 @@ router
         try {
             
             let result = await campaignService.newCampaign(req.body);
+            console.log("/new", result);
             
             if(result && result.statusCode == 400){
-                res.statusCode = result.statusCode;
+                res.status = result.statusCode;
                 res.send( buildResponse(result.statusCode, result.message, result.data));
             }else if(result && result.statusCode == 200){
                 res.send( buildResponse(result.statusCode, result.message, result.data));
@@ -28,7 +29,7 @@ router
             let result = await campaignService.joinCampaign(req.params.hash,req.body);
             
             if(result && result.statusCode == 400){
-                res.statusCode = result.statusCode;
+                res.status = result.statusCode;
                 res.send( buildResponse(result.statusCode, result.message, result.data));
             }else if(result && result.statusCode == 200){
                 res.send( buildResponse(result.statusCode, result.message, result.data));
@@ -45,7 +46,7 @@ router
             let result = await campaignService.getCampaignStatus(req.params.hash);
             
             if(result && result.statusCode == 400){
-                res.statusCode = result.statusCode;
+                res.status = result.statusCode;
                 res.send( buildResponse(result.statusCode, result.message, result.data));
             }else if(result && result.statusCode == 200){
                 res.send( buildResponse(result.statusCode, result.message, result.data));
@@ -66,7 +67,7 @@ router
             let result = await campaignService.placeCell(req.params.hash, req.params.cell, req.body);
             
             if(result && result.statusCode == 400){
-                res.statusCode = result.statusCode;
+                res.status = result.statusCode;
                 res.send( buildResponse(result.statusCode, result.message, result.data));
             }else if(result && result.statusCode == 200){
                 res.send( buildResponse(result.statusCode, result.message,result.data));
