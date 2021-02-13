@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, Container, Row, Col, Button, InputGroup, FormControl } from 'react-bootstrap';
+import { Card, Container, Row, Col, Button, InputGroup, FormControl, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import './Home.scss';
 
 const onClickHandle = (event:any)=>{
@@ -40,7 +40,7 @@ function Home() {
                     <Card className="main-card">
                         <Card.Title className="text-left pt-2 pl-4 pb-0">New Campaign</Card.Title>
                         <Card.Body>
-                            <InputGroup className="mb-3">
+                            { !hash && <InputGroup className="mb-3">
                                 <FormControl
                                     placeholder="Your name"
                                     aria-label="Your name"
@@ -52,16 +52,17 @@ function Home() {
                                     <Button
                                         onClick={getHash}
                                         variant="secondary"
-                                        className="scale-animation"
                                     >
                                         Create game
                                     </Button>
                                 </InputGroup.Append>
-                            </InputGroup>
+                            </InputGroup>}
+                            <small>The name must be at least 4 character long.</small>
+                            <br></br>
                             { namePlayer && <p><b>Your name:</b> {namePlayer}</p>}
                             { hash && <p><b>Your game hash:</b> {hash}</p>}
                             { hash && <p>Remember to share your game hash ({hash}) with your 2nd player</p>}
-                            <Button
+                            { hash && <Button
                                 onClick={onClickHandle}
                                 className="secondary-button scale-animation"
                             >
@@ -73,7 +74,7 @@ function Home() {
                                 }} >
                                     ¡Comenzar partida!
                                 </Link>
-                            </Button>
+                            </Button>}
                         </Card.Body>
                     </Card>
                 </Col>
