@@ -27,7 +27,20 @@ function NavBar( props: INavBarProps) {
           value={props.campaignHash}
           onChange={props.handleCampaignHash}
         />
-        <Button variant="outline-success" onClick={ props.joinCampaign }>Join a game</Button>
+        <Link to={{
+          pathname:`/campaign/${props.campaignHash}`,
+          state: {
+            namePlayer: null,
+          }
+        }}>
+          <Button 
+            onClick={ props.joinCampaign }
+            disabled={ props.campaignHash.length < 5 }
+            className="navbar-join scale-animation"
+          >
+            Join a game
+          </Button>
+        </Link>
       </Form>
     </Navbar>
   );

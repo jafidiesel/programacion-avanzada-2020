@@ -1,36 +1,53 @@
-import React, { Fragment, useState } from 'react';
-import Board from 'components/board/Board';
-import Player from 'components/player/Player';
-import {Container, Row, Col} from 'react-bootstrap';
-
+import React, { Fragment, useState, useEffect } from 'react';
+import PlayerBoard from 'components/playerBoard/PlayerBoard';
+import GameBoard from 'components/gameBoard/GameBoard';
+import { Alert } from 'react-bootstrap';
+import Errors from '../../utils/static/Errors';
+import { getStatus } from '../../utils/backend';
 
 function Campaign(props:any) {
 
-    const [ player2, setPlayer2] = useState()
+	const namePlayer1 = props.location.state.namePlayer;
 
-    const namePlayer1 = props.location.state.namePlayer;
-    const { hash } = props.match.params
+	const [ error, setError] = useState({
+		message: "",
+		state: false,
+		type: ""
+	});
 
+	const { hash } = props.match.params
 
-    return (
-        <Fragment>
-            <p>nombre recibido: {namePlayer1}</p>
-            <p>hash recibido: {hash}</p>
-            <Container >
-                <Row>
-                    <Col style={{backgroundColor: 'blue'}}>
-                        <Player name={namePlayer1} symbol="X" />
-                    </Col>
-                    <Col style={{backgroundColor: 'red'}}>
-                        <Board/>
-                    </Col>
-                    <Col style={{backgroundColor: 'blue'}}>
-                        <Player name="" symbol="" />
-                    </Col>
-                </Row>
-            </Container>
-        </Fragment>
-    );
+	useEffect(() => {
+		// component did mount
+		//- check hash received is valid
+		//	if not show error
+
+		if(getStatus(hash, namePlayer1))
+			setError({
+				message: "hash error",
+				state: true,
+				type: Errors.INVALID_HASH
+			})
+	}, []);
+
+	return (
+		<Fragment>
+			<PlayerBoard 
+				namePlayer1={namePlayer1}
+			/>
+			<GameBoard
+			/>
+			<hr></hr>
+			<p>hash received: {hash}</p>
+			{
+				error.state
+					? <Alert variant="danger">
+						{error.message}
+					</Alert>
+					: null
+			}
+		</Fragment>
+	);
 }
 
 export default Campaign;
