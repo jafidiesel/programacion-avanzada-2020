@@ -6,7 +6,7 @@ export default function GameBoard() {
 		<Container>
 			<Row>
 				<Col xs="12">
-					<h2>GameBoard</h2>
+					<h2 className="card-title">GameBoard</h2>
 				</Col>
 			</Row>
 			<Row>

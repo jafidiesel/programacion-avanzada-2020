@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000 !important;
 }
 
 code {
@@ -48,4 +49,8 @@ code {
     color: lightblue !important;
     font-weight: bolder;
   }
+}
+
+.card-title {
+  color: #808080;
 }

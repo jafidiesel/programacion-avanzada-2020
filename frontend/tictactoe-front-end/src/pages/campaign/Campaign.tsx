@@ -1,13 +1,43 @@
 import React, { Fragment, useState, useEffect } from 'react';
+import { Alert } from 'react-bootstrap';
+
+import Errors from '../../utils/static/Errors';
+import { getStatus as getStatusAPI } from '../../utils/apiCalls';
+import { PlayersData, CampaignStatus } from '../../utils/static/interfaces';
+
 import PlayerBoard from 'components/playerBoard/PlayerBoard';
 import GameBoard from 'components/gameBoard/GameBoard';
-import { Alert } from 'react-bootstrap';
-import Errors from '../../utils/static/Errors';
-import { getStatus } from '../../utils/backend';
 
 function Campaign(props:any) {
 
+	const { hash } = props.match.params
 	const namePlayer1 = props.location.state.namePlayer;
+	let playersData: PlayersData = {
+		namePlayer1: '',
+		symbolPlayer1: ''
+	};
+	const [campaignResponse, setCampaignResponse] = useState<CampaignStatus>({
+		campaign: {
+			nextPlayer: "",
+			lastBoard: ""
+		},
+		lastBoard: [],
+		players: [
+			{
+				namePlayer1: "",
+				symbolPlayer1: ""
+			},
+			{
+				namePlayer2: "",
+				symbolPlayer2: ""
+			}
+		],
+		score: {
+			scorePlayer1: "",
+			scorePlayer2: "",
+			ties: ""
+		}
+	});
 
 	const [ error, setError] = useState({
 		message: "",
@@ -15,25 +45,40 @@ function Campaign(props:any) {
 		type: ""
 	});
 
-	const { hash } = props.match.params
+	useEffect( () => {
+		// this declaration in useEffect guarantee the ability to call
+		// a async function inside useEffect
+		async function fetchData(hash: string) {
+			setCampaignResponse(await getStatusAPI(hash));
+		}
 
-	useEffect(() => {
-		// component did mount
-		//- check hash received is valid
-		//	if not show error
-
-		if(getStatus(hash, namePlayer1))
+		try {
+			fetchData(hash);
+		} catch (error) {
 			setError({
 				message: "hash error",
 				state: true,
 				type: Errors.INVALID_HASH
-			})
+			});
+		}
 	}, []);
+
+	// this code 
+	if(campaignResponse.players.length){
+		playersData = {
+			namePlayer1: campaignResponse.players[0].namePlayer1,
+			symbolPlayer1: campaignResponse.players[0].symbolPlayer1,
+			namePlayer2: campaignResponse.players[1].namePlayer2,
+			symbolPlayer2: campaignResponse.players[1].symbolPlayer2
+		};
+	}
 
 	return (
 		<Fragment>
-			<PlayerBoard 
-				namePlayer1={namePlayer1}
+			<PlayerBoard
+				playersData={playersData}
+				nextPlayer={campaignResponse.campaign.nextPlayer}
+				hash={hash}
 			/>
 			<GameBoard
 			/>

@@ -3,7 +3,7 @@ import Board from 'components/board/Board';
 import Player from 'components/player/Player';
 import {Container, Row, Col, Card} from 'react-bootstrap';
 import Errors from '../../utils/static/Errors';
-import {getStatus} from '../../utils/backend';
+import {getStatus} from '../../utils/apiCalls';
 import PlayerBoard from 'components/playerBoard/PlayerBoard';
 import GameBoard from 'components/gameBoard/GameBoard';
 
@@ -93,11 +93,11 @@ function Campaign(props:any) {
                     </div>
                     : renderGameboard()
             } */}
-            <PlayerBoard 
+            {/* <PlayerBoard 
                 namePlayer1={namePlayer1}
             />
             <GameBoard
-            />
+            /> */}
 
         </Fragment>
     );

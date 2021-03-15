@@ -1,0 +1,2 @@
+- (back) add board in campaign/<hash>/status endpoint
+- (front) add scoreBoard in /components
