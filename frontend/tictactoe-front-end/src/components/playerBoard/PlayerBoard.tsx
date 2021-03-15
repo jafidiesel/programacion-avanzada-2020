@@ -35,8 +35,8 @@ export default function PlayerBoard (props:PlayerBoardProps) {
 							!props.playersData.namePlayer2 || props.playersData.namePlayer2 === ''
 								? <p>Invite your second player with yout hash: <b>{props.hash}</b></p>
 								: <Fragment>
-									<p>namePlayer2: {props.playersData.namePlayer2}</p>
-									<p>symbolPlayer1: {props.playersData.symbolPlayer1}</p>
+									<p>Name: {props.playersData.namePlayer2}</p>
+									<p>Symbol: {props.playersData.symbolPlayer2}</p>
 								</Fragment>
 						}
 					</Fragment>

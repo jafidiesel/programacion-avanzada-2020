@@ -75,16 +75,13 @@ function Home() {
 											<p>Remember to share your game hash ({hash}) with your 2nd player.</p>
 											<Link to={{
 												pathname:`/campaign/${hash}`,
-												state: {
-													namePlayer: namePlayer,
-												}
 											}}>
-											<Button
-												onClick={onClickHandle}
-												className="secondary-button scale-animation"
-											>
+												<Button
+													onClick={onClickHandle}
+													className="secondary-button scale-animation"
+												>
 													Start Game!
-											</Button>
+												</Button>
 										</Link>
 									</Fragment>
 							}

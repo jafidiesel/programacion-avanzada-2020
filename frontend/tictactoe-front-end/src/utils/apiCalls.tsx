@@ -1,4 +1,3 @@
-// here all the apicalls
 import { CampaignModel } from './static/interfaces';
 
 export async function getStatus(hash: string) {
@@ -11,8 +10,6 @@ export async function getStatus(hash: string) {
 		})
 		.then( res => res.json())
 		.then((res:any) => {
-			console.log(res.data);
-			console.log(res.data?.hash);
 			return res.data;
 		})
 		.catch(error => console.log(error) )
@@ -29,8 +26,24 @@ export async function newCampaign(namePlayer: string): Promise<CampaignModel> {
 		})
 		.then(res => res.json())
 		.then((res:any) => {
-			console.log(res.data);
-			console.log(res.data?.hash);
+			return res.data;
+		})
+		.catch(error => {
+			console.log(error);
+		} );
+}
+
+export async function joinCampaign(hash: string, namePlayer: string): Promise<CampaignModel> {
+  return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/join`,{
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({ namePlayer: namePlayer })
+		})
+		.then(res => res.json())
+		.then((res:any) => {
 			return res.data;
 		})
 		.catch(error => {

@@ -5,6 +5,9 @@ import Router from 'components/router/Router';
 function Initialize() {
     const [campaignHash, setCampaignHash] = useState("");
     function joinCampaign (){
+        // use a modal to ask for player2 name
+        // execute join call
+        // 
         console.log("joinCampaign with hash: ", campaignHash);
     }
     function handleCampaignHash (event: any): void {

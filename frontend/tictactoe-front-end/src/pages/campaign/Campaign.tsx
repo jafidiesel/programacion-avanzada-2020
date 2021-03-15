@@ -11,7 +11,6 @@ import GameBoard from 'components/gameBoard/GameBoard';
 function Campaign(props:any) {
 
 	const { hash } = props.match.params
-	const namePlayer1 = props.location.state.namePlayer;
 	let playersData: PlayersData = {
 		namePlayer1: '',
 		symbolPlayer1: ''
@@ -45,15 +44,17 @@ function Campaign(props:any) {
 		type: ""
 	});
 
-	useEffect( () => {
-		// this declaration in useEffect guarantee the ability to call
-		// a async function inside useEffect
-		async function fetchData(hash: string) {
-			setCampaignResponse(await getStatusAPI(hash));
-		}
 
+	useEffect( () => {
+		async function fetchData() {
+			setCampaignResponse(await getStatusAPI(hash));
+			console.log("fetchData");
+		}
+		const interval = setInterval(() => {
+			fetchData();
+		}, 10000);
 		try {
-			fetchData(hash);
+			fetchData();
 		} catch (error) {
 			setError({
 				message: "hash error",
@@ -61,9 +62,9 @@ function Campaign(props:any) {
 				type: Errors.INVALID_HASH
 			});
 		}
-	}, []);
+		return () => clearInterval(interval);
+	}, [hash]);
 
-	// this code 
 	if(campaignResponse.players.length){
 		playersData = {
 			namePlayer1: campaignResponse.players[0].namePlayer1,
@@ -83,7 +84,6 @@ function Campaign(props:any) {
 			<GameBoard
 			/>
 			<hr></hr>
-			<p>hash received: {hash}</p>
 			{
 				error.state
 					? <Alert variant="danger">
