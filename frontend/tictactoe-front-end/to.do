@@ -1,2 +1,4 @@
 - (back) add board in campaign/<hash>/status endpoint
 - (front) add scoreBoard in /components
+- add modal when 2nd player joins
+- (improve error response on backend) update campaign/<hash>/status to return 400/404 when hash is malformed or don't exist

@@ -104,13 +104,16 @@ curl --location --request POST 'localhost:3000/campaign/new' \
 - url: `campaign/new`
 - Create a new campaign and it returns the campaign hash
 - body: `{ namePlayer: string }`
-- Success: { 
+- Success: 
+```
+{ 
     status: int,
     message: string,
     data: {
         hash: string
     }
  }
+```
 
 ### &#x2705; _[GET]_ get campaign status
 ```

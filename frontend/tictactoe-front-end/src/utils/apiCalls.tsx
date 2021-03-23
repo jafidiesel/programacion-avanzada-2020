@@ -50,3 +50,15 @@ export async function joinCampaign(hash: string, namePlayer: string): Promise<Ca
 			console.log(error);
 		} );
 }
+
+export async function hashExist(hash: string): Promise<boolean> {
+  return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		}
+		})
+		.then( res => true)
+		.catch(error => false )
+}
