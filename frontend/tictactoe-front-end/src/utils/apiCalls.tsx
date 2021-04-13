@@ -1,7 +1,7 @@
 import { CampaignModel } from './static/interfaces';
 
 export async function getStatus(hash: string) {
-  return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
+    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
@@ -16,7 +16,7 @@ export async function getStatus(hash: string) {
 }
 
 export async function newCampaign(namePlayer: string): Promise<CampaignModel> {
-  return await fetch(`${process.env.REACT_APP_API_URL}campaign/new`,{
+    return await fetch(`${process.env.REACT_APP_API_URL}campaign/new`,{
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -34,7 +34,7 @@ export async function newCampaign(namePlayer: string): Promise<CampaignModel> {
 }
 
 export async function joinCampaign(hash: string, namePlayer: string): Promise<CampaignModel> {
-  return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/join`,{
+    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/join`,{
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -52,7 +52,7 @@ export async function joinCampaign(hash: string, namePlayer: string): Promise<Ca
 }
 
 export async function hashExist(hash: string): Promise<boolean> {
-  return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
+    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',

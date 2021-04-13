@@ -67,15 +67,17 @@ function Home() {
 								</InputGroup.Append>
 							</InputGroup>}
 							{ 
-								!hash
-									? null
-									: <Fragment>
-											<p><b>Your name:</b> {namePlayer}</p>
+								hash
+									? <Fragment>
+											<p><b>Player number 1:</b> {namePlayer}</p>
 											<p><b>Your game hash:</b> {hash}</p>
 											<p>Remember to share your game hash ({hash}) with your 2nd player.</p>
 											<Link to={{
-												pathname:`/campaign/${hash}`,
-											}}>
+                                                pathname:`/campaign/${hash}`,
+                                                state: {
+                                                    player1Selected: true
+                                                }
+                                            }}>
 												<Button
 													onClick={onClickHandle}
 													className="secondary-button scale-animation"
@@ -84,20 +86,8 @@ function Home() {
 												</Button>
 										</Link>
 									</Fragment>
+                                    : null
 							}
-							<Button
-								onClick={onClickHandle}
-								className="secondary-button scale-animation"
-							>
-								<Link to={{
-									pathname:`/campaign/test-hash-123`,
-									state: {
-										namePlayer: "tempName",
-									}
-								}} >
-									¡Comenzar partida harcode!
-								</Link>
-							</Button>
 						</Card.Body>
 						<Card.Footer>
 							{

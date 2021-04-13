@@ -8,7 +8,8 @@ import './PlayerBoard.scss';
 interface PlayerBoardProps {
 	playersData: PlayersData;
 	nextPlayer: string;
-	hash: string
+    hash: string;
+    player1Selected?: boolean;
 }
 
 export default function PlayerBoard (props:PlayerBoardProps) {
@@ -22,29 +23,30 @@ export default function PlayerBoard (props:PlayerBoardProps) {
 			<Row>
 				<Col>
 					<Card className="main-card">
-						<h3>Player 1</h3>
+						<h3>{ props.player1Selected ? "You are " : "" }Player 1</h3>
 						<p>Name: {props.playersData.namePlayer1}</p>
 						<p>Symbol: {props.playersData.symbolPlayer1}</p>
 					</Card>
 				</Col>
 				<Col>
 					<Card className="main-card">
-					<Fragment>
-						<h3>Player 2</h3>
-						{
-							!props.playersData.namePlayer2 || props.playersData.namePlayer2 === ''
-								? <p>Invite your second player with yout hash: <b>{props.hash}</b></p>
-								: <Fragment>
-									<p>Name: {props.playersData.namePlayer2}</p>
-									<p>Symbol: {props.playersData.symbolPlayer2}</p>
-								</Fragment>
-						}
-					</Fragment>
+                        <Fragment>
+                            <h3>{ !props.player1Selected ? "You are " : "" }Player 2</h3>
+                            {
+                                !props.playersData.namePlayer2 || props.playersData.namePlayer2 === ''
+                                    ? <p>Invite your second player with your hash: <b>{props.hash}</b></p>
+                                    : <Fragment>
+                                        <p>Name: {props.playersData.namePlayer2}</p>
+                                        <p>Symbol: {props.playersData.symbolPlayer2}</p>
+                                    </Fragment>
+                            }
+                        </Fragment>
 					</Card>
 				</Col>
 				<Col>
 					<Card className="main-card">
 						<Fragment>
+                            <h3>Game Status:</h3>
 							{
 								props.nextPlayer
 									? <p>Next Player: {props.nextPlayer}</p>

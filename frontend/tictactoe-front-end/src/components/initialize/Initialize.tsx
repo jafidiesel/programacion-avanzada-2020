@@ -6,15 +6,15 @@ import { useHistory } from 'react-router-dom';
 import JoinMondal from 'components/joinModal/JoinModal';
 
 function Initialize() {
-    const [campaignHash, setCampaignHash] = useState("59e3264c104e4d68378107e416a7a0c0");
+    const [campaignHash, setCampaignHash] = useState("");
     const [showModal, setShowModal] = useState(false);
     const history = useHistory();
 
     const toggleShowModal = () => {
         setShowModal(!setShowModal);
     }
-    async function joinCampaign (){
-        console.log("hashExist", await hashExist(campaignHash));
+    const joinCampaign = async () =>{
+        console.log("hashExist-> ", await hashExist(campaignHash));
         if( await hashExist(campaignHash)) {
             setShowModal(true);
 
@@ -23,7 +23,7 @@ function Initialize() {
             // handle backend errors (to be implemented)
         }        
     }
-    function handleCampaignHash (event: any): void {
+    const handleCampaignHash = (event: any): void => {
         setCampaignHash(event.target ? event.target.value : campaignHash);
     }
     return (

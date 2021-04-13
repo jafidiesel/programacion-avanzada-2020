@@ -43,3 +43,8 @@ export interface CampaignStatus {
 		ties: string;
 	}
 }
+
+export interface PlayerSelected {
+    player1: boolean;
+    namePlayer: string
+}

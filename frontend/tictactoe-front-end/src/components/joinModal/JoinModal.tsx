@@ -10,7 +10,7 @@ interface JoinModalProps {
 
 export default function JoinMondal(props: JoinModalProps) {
 	const [ namePlayer, setNamePlayer ] = useState("");
-	const [ numberPlayer, setNumberPlayer ] = useState(2);
+	const [ numberPlayer, setNumberPlayer ] = useState();
 
 	const handleNamePlayer = (e: any) => {
 		if( !e.target.value ) return;
@@ -21,12 +21,12 @@ export default function JoinMondal(props: JoinModalProps) {
 		if( !e.target.checked ) {
 			return;
 		} else {
-			setNumberPlayer(2);
+			setNumberPlayer(Number(e.target.value));
 		}
 	}
 
 	const checkJoin = () => {
-		if( !namePlayer ) return;
+		if( !numberPlayer ) return;
 		try {
 			joinCampaign(props.campaignHash, namePlayer)
 				.then(res => console.log(res))
@@ -38,7 +38,7 @@ export default function JoinMondal(props: JoinModalProps) {
 	return(
 		<Modal animation={false} show={props.showModal} onHide={props.toggleShowModal} centered size="lg">
 			<Modal.Header closeButton>
-				<Modal.Title>Game hash: <b>{props.campaignHash}</b></Modal.Title>
+				<Modal.Title><b>Game hash: </b>{props.campaignHash}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
 				<Row>
@@ -47,35 +47,43 @@ export default function JoinMondal(props: JoinModalProps) {
 							<Form.Row>
 								<Col><h5>Join game as:</h5></Col>
 								<Col>
-									<Form.Control
-										placeholder="Player name"
-										value={namePlayer}
-										onChange={handleNamePlayer}
-									/>
-								</Col>
-							</Form.Row>
-							<hr></hr>
-							<Form.Row>
-								{/* <Col className="text-center">
 									<Form.Check
 										type="radio"
 										label="Player 1"
 										name="formHorizontalRadios"
-										id="formHorizontalRadios1"
+                                        id="formHorizontalRadios1"
+                                        value={1}
+										onChange={handleNumberPlayer}
 									/>
-								</Col> */}
-								<Col className="text-center">
 									<Form.Check
 										type="radio"
 										label="Player 2"
 										name="formHorizontalRadios"
-										id="formHorizontalRadios2"
+                                        id="formHorizontalRadios2"
+                                        value={2}
 										onChange={handleNumberPlayer}
-										checked
 									/>
-									{namePlayer}
 								</Col>
 							</Form.Row>
+                            {
+                                numberPlayer === 2
+                                ? <>
+                                    <hr></hr>
+                                    <Form.Row>
+                                        <Col className="text-center">
+                                            <p>2nd player's name: </p>
+                                        </Col>
+                                        <Col className="text-center">
+                                            <Form.Control
+                                                placeholder="Player name"
+                                                value={namePlayer}
+                                                onChange={handleNamePlayer}
+                                            />
+                                        </Col>
+                                    </Form.Row>
+                                </>
+                                : null
+                            }
 						</Form>
 					</Col>
 				</Row>

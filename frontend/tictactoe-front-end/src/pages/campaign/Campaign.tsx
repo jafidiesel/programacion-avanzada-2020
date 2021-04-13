@@ -10,7 +10,8 @@ import GameBoard from 'components/gameBoard/GameBoard';
 
 function Campaign(props:any) {
 
-	const { hash } = props.match.params
+	const { hash } = props.match.params;
+    const { player1Selected } = props.location?.state;
 	let playersData: PlayersData = {
 		namePlayer1: '',
 		symbolPlayer1: ''
@@ -38,7 +39,7 @@ function Campaign(props:any) {
 		}
 	});
 
-	const [ error, setError] = useState({
+	const [ error, setError ] = useState({
 		message: "",
 		state: false,
 		type: ""
@@ -48,7 +49,6 @@ function Campaign(props:any) {
 	useEffect( () => {
 		async function fetchData() {
 			setCampaignResponse(await getStatusAPI(hash));
-			console.log("fetchData");
 		}
 		const interval = setInterval(() => {
 			fetchData();
@@ -72,14 +72,15 @@ function Campaign(props:any) {
 			namePlayer2: campaignResponse.players[1].namePlayer2,
 			symbolPlayer2: campaignResponse.players[1].symbolPlayer2
 		};
-	}
+    }
 
 	return (
 		<Fragment>
 			<PlayerBoard
 				playersData={playersData}
 				nextPlayer={campaignResponse.campaign.nextPlayer}
-				hash={hash}
+                hash={hash}
+                player1Selected={player1Selected}
 			/>
 			<GameBoard
 			/>
