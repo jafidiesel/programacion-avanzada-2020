@@ -14,11 +14,9 @@ function Initialize() {
         setShowModal(!setShowModal);
     }
     const joinCampaign = async () =>{
-        console.log("hashExist-> ", await hashExist(campaignHash));
         if( await hashExist(campaignHash)) {
             setShowModal(true);
 
-            // history.push(`/campaign/${campaignHash}`)
         } else {
             // handle backend errors (to be implemented)
         }        
@@ -38,6 +36,7 @@ function Initialize() {
                 campaignHash={campaignHash}
                 showModal={showModal}
                 toggleShowModal={toggleShowModal}
+                history={history}
             />
         </Fragment>
     );

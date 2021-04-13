@@ -69,21 +69,21 @@ function Home() {
 							{ 
 								hash
 									? <Fragment>
-											<p><b>Player number 1:</b> {namePlayer}</p>
-											<p><b>Your game hash:</b> {hash}</p>
-											<p>Remember to share your game hash ({hash}) with your 2nd player.</p>
-											<Link to={{
-                                                pathname:`/campaign/${hash}`,
-                                                state: {
-                                                    player1Selected: true
-                                                }
-                                            }}>
-												<Button
-													onClick={onClickHandle}
-													className="secondary-button scale-animation"
-												>
-													Start Game!
-												</Button>
+                                        <p><b>Player number 1:</b> {namePlayer}</p>
+                                        <p><b>Your game hash:</b> {hash}</p>
+                                        <p>Remember to share your game hash ({hash}) with your 2nd player.</p>
+                                        <Link to={{
+                                            pathname:`/campaign/${hash}`,
+                                            state: {
+                                                player1Selected: true
+                                            }
+                                        }}>
+                                            <Button
+                                                onClick={onClickHandle}
+                                                className="secondary-button scale-animation"
+                                            >
+                                                Start Game!
+                                            </Button>
 										</Link>
 									</Fragment>
                                     : null

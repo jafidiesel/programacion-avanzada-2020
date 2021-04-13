@@ -5,12 +5,13 @@ import { joinCampaign } from "../../utils/apiCalls";
 interface JoinModalProps {
 	showModal: boolean;
 	campaignHash: string;
-	toggleShowModal(): void;
+    toggleShowModal(): void;
+    history: any;
 }
 
 export default function JoinMondal(props: JoinModalProps) {
 	const [ namePlayer, setNamePlayer ] = useState("");
-	const [ numberPlayer, setNumberPlayer ] = useState();
+	const [ numberPlayer, setNumberPlayer ] = useState(2);
 
 	const handleNamePlayer = (e: any) => {
 		if( !e.target.value ) return;
@@ -29,7 +30,15 @@ export default function JoinMondal(props: JoinModalProps) {
 		if( !numberPlayer ) return;
 		try {
 			joinCampaign(props.campaignHash, namePlayer)
-				.then(res => console.log(res))
+				.then(res => {
+                    props.history.push({
+                        pathname:`/campaign/${props.campaignHash}`,
+                        state: {
+                            player1Selected: false
+                        }
+                    })
+                    props.toggleShowModal();
+                })
 		} catch (error) {
 			console.log(error);
 		}
@@ -53,7 +62,8 @@ export default function JoinMondal(props: JoinModalProps) {
 										name="formHorizontalRadios"
                                         id="formHorizontalRadios1"
                                         value={1}
-										onChange={handleNumberPlayer}
+                                        onChange={handleNumberPlayer}
+                                        disabled
 									/>
 									<Form.Check
 										type="radio"
@@ -61,7 +71,8 @@ export default function JoinMondal(props: JoinModalProps) {
 										name="formHorizontalRadios"
                                         id="formHorizontalRadios2"
                                         value={2}
-										onChange={handleNumberPlayer}
+                                        onChange={handleNumberPlayer}
+                                        checked
 									/>
 								</Col>
 							</Form.Row>
