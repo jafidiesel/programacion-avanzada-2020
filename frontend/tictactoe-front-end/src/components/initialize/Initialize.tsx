@@ -3,7 +3,7 @@ import { hashExist } from 'utils/apiCalls';
 import NavBar from 'components/navbar/NavBar';
 import Router from 'components/router/Router';
 import { useHistory } from 'react-router-dom';
-import JoinMondal from 'components/joinModal/JoinModal';
+import JoinModal from 'components/joinModal/JoinModal';
 
 function Initialize() {
     const [campaignHash, setCampaignHash] = useState("");
@@ -32,7 +32,7 @@ function Initialize() {
                 campaignHash={campaignHash}
             />
             <Router />
-            <JoinMondal
+            <JoinModal
                 campaignHash={campaignHash}
                 showModal={showModal}
                 toggleShowModal={toggleShowModal}

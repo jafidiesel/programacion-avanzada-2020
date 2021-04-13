@@ -9,7 +9,7 @@ interface JoinModalProps {
     history: any;
 }
 
-export default function JoinMondal(props: JoinModalProps) {
+export default function JoinModal(props: JoinModalProps) {
 	const [ namePlayer, setNamePlayer ] = useState("");
 	const [ numberPlayer, setNumberPlayer ] = useState(2);
 
