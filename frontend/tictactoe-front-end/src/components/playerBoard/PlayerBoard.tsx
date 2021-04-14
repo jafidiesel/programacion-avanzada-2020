@@ -17,13 +17,13 @@ export default function PlayerBoard (props:PlayerBoardProps) {
 		<Container>
 			<Row>
 				<Col xs="12">
-					<h2 className="card-title">PlayerBoard</h2>
+					<h2 className="card-title">Player Board</h2>
 				</Col>
 			</Row>
 			<Row>
 				<Col>
 					<Card className="main-card">
-						<h3>{ props.player1Selected ? "You are " : "" }Player 1</h3>
+						<h4>{ props.player1Selected ? "You are " : "" }Player 1</h4>
 						<p>Name: {props.playersData.namePlayer1}</p>
 						<p>Symbol: {props.playersData.symbolPlayer1}</p>
 					</Card>
@@ -31,7 +31,7 @@ export default function PlayerBoard (props:PlayerBoardProps) {
 				<Col>
 					<Card className="main-card">
                         <Fragment>
-                            <h3>{ !props.player1Selected ? "You are " : "" }Player 2</h3>
+                            <h4>{ !props.player1Selected ? "You are " : "" }Player 2</h4>
                             {
                                 !props.playersData.namePlayer2 || props.playersData.namePlayer2 === ''
                                     ? <p>Invite your second player with your hash: <b>{props.hash}</b></p>
@@ -46,7 +46,7 @@ export default function PlayerBoard (props:PlayerBoardProps) {
 				<Col>
 					<Card className="main-card">
 						<Fragment>
-                            <h3>Game Status:</h3>
+                            <h4>Game Status:</h4>
 							{
 								props.nextPlayer
 									? <p>Next Player: {props.nextPlayer}</p>

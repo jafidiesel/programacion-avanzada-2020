@@ -83,6 +83,9 @@ function Campaign(props:any) {
                 player1Selected={player1Selected}
 			/>
 			<GameBoard
+                hash={hash}
+                player1Selected={player1Selected}
+                board={campaignResponse.lastBoard}
 			/>
 			<hr></hr>
 			{

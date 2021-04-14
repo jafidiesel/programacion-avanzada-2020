@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { hashExist } from 'utils/apiCalls'; 
 import NavBar from 'components/navbar/NavBar';
-import Router from 'components/router/Router';
+import Router from '../../Router';
 import { useHistory } from 'react-router-dom';
 import JoinModal from 'components/joinModal/JoinModal';
 
@@ -13,7 +13,7 @@ function Initialize() {
     const toggleShowModal = () => {
         setShowModal(!setShowModal);
     }
-    const joinCampaign = async () =>{
+    const openModal = async () =>{
         if( await hashExist(campaignHash)) {
             setShowModal(true);
 
@@ -27,7 +27,7 @@ function Initialize() {
     return (
         <Fragment>
             <NavBar
-                joinCampaign={joinCampaign}
+                openModal={openModal}
                 handleCampaignHash={handleCampaignHash}
                 campaignHash={campaignHash}
             />

@@ -8,8 +8,10 @@ export async function getStatus(hash: string) {
 			'Content-Type': 'application/json'
 		}
 		})
-		.then( res => res.json())
-		.then((res:any) => {
+		.then(res => res.json())
+		.then((res: any) => {
+            //console.log(res);
+            
 			return res.data;
 		})
 		.catch(error => console.log(error) )
@@ -25,7 +27,7 @@ export async function newCampaign(namePlayer: string): Promise<CampaignModel> {
 		body: JSON.stringify({ namePlayer: namePlayer })
 		})
 		.then(res => res.json())
-		.then((res:any) => {
+		.then((res: any) => {
 			return res.data;
 		})
 		.catch(error => {
@@ -58,7 +60,19 @@ export async function hashExist(hash: string): Promise<boolean> {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		}
-		})
-		.then( res => true)
-		.catch(error => false )
+    })
+    .then(res => true)
+    .catch(error => false);
+}
+
+export async function setPosition(hash: string, position: number): Promise<any> {
+    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/cell/${position}` ,{
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+			'Content-Type': 'application/json'
+        }
+    })
+    .then(res => res)
+    .catch(error => console.log(error));
 }
