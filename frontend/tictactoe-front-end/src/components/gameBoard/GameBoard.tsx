@@ -1,6 +1,7 @@
-import React from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Board from 'components/board/Board';
+import "./GameBoard.scss";
 
 interface GameBoardProps {
     hash: string;
@@ -9,6 +10,8 @@ interface GameBoardProps {
 }
 
 export default function GameBoard(props: GameBoardProps) {
+
+    const [gameMessage, setGameMessage] = useState("");
 
     const selectCell = (e: any) => {
         console.log(e.target.value);
@@ -24,10 +27,17 @@ export default function GameBoard(props: GameBoardProps) {
 			<Row>
 				<Col>
 					<Card className="main-card">
-                        <Board
-                            selectCell={selectCell}
-                            board={props.board}
-                        />
+                        {
+                            !gameMessage
+                            ? <Board
+                                selectCell={selectCell}
+                                board={props.board}
+                            />
+                            :<div className="game-board">
+                                <p>{gameMessage}</p>
+                                <Button>New Game!</Button>
+                            </div> 
+                        }
 					</Card>
 				</Col>
 			</Row>

@@ -9,7 +9,7 @@ interface BoardProps {
 function Board(props: BoardProps) {
     console.log("board", props.board);
     let idBoard: number;
-    idBoard = props.board.length ? props.board[0].idBoard : 0;
+    //idBoard = props.board.length ? props.board[0].idBoard : 0;
     // hacer un array nuevo desde el objeto props.board para hacer el tablero
     // quitar o guardar el idBoard
     // Chequear que el tablero sea el ultimo (no recuerdo como era esto)
