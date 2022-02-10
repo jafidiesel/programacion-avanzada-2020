@@ -1,78 +1,77 @@
 import { CampaignModel } from './static/interfaces';
 
 export async function getStatus(hash: string) {
-    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
+	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		}
-		})
+	})
 		.then(res => res.json())
 		.then((res: any) => {
-            //console.log(res);
-            
+
 			return res.data;
 		})
-		.catch(error => console.log(error) )
+		.catch(error => console.error(error))
 }
 
 export async function newCampaign(namePlayer: string): Promise<CampaignModel> {
-    return await fetch(`${process.env.REACT_APP_API_URL}campaign/new`,{
+	return await fetch(`${process.env.REACT_APP_API_URL}campaign/new`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ namePlayer: namePlayer })
-		})
+	})
 		.then(res => res.json())
 		.then((res: any) => {
 			return res.data;
 		})
 		.catch(error => {
-			console.log(error);
-		} );
+			console.error(error);
+		});
 }
 
 export async function joinCampaign(hash: string, namePlayer: string): Promise<CampaignModel> {
-    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/join`,{
+	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/join`, {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({ namePlayer: namePlayer })
-		})
+	})
 		.then(res => res.json())
-		.then((res:any) => {
+		.then((res: any) => {
 			return res.data;
 		})
 		.catch(error => {
-			console.log(error);
-		} );
+			console.error(error);
+		});
 }
 
-export async function hashExist(hash: string): Promise<boolean> {
-    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`,{
+export async function hashExist(hash: string): Promise<any> {
+	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`, {
 		method: 'GET',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		}
-    })
-    .then(res => true)
-    .catch(error => false);
+	})
+		.then(res => res)
+		.catch(error => error);
 }
 
 export async function setPosition(hash: string, position: number): Promise<any> {
-    return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/cell/${position}` ,{
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
+	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/cell/${position}`, {
+		method: 'GET',
+		headers: {
+			'Accept': 'application/json',
 			'Content-Type': 'application/json'
-        }
-    })
-    .then(res => res)
-    .catch(error => console.log(error));
+		}
+	})
+		.then(res => res)
+		.catch(error => console.error(error));
 }

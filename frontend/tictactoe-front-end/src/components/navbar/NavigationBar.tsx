@@ -2,15 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
-import './NavBar.scss';
+import './NavigationBar.scss';
 
-interface INavBarProps {
+interface INavigationBarProps {
     campaignHash: string;
-    handleCampaignHash(event:any): void;
+    handleCampaignHash(event: any): void;
     openModal(): void;
 }
 
-function NavBar( props: INavBarProps) {
+const NavigationBar = (props: INavigationBarProps) => {
     return (
         <Navbar bg="dark" expand="lg" className="navbar">
             <Navbar.Brand className="navbar-brand">Tic-Tac-Toe</Navbar.Brand>
@@ -27,9 +27,9 @@ function NavBar( props: INavBarProps) {
                     value={props.campaignHash}
                     onChange={props.handleCampaignHash}
                 />
-                <Button 
-                    onClick={ props.openModal }
-                    disabled={ props.campaignHash.length < 5 }
+                <Button
+                    onClick={props.openModal}
+                    disabled={props.campaignHash.length < 5}
                     className="navbar-join scale-animation"
                 >
                     Join a game
@@ -39,4 +39,4 @@ function NavBar( props: INavBarProps) {
     );
 }
 
-export default NavBar;
+export default NavigationBar;

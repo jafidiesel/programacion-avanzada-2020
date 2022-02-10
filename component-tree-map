@@ -1,0 +1,11 @@
+index.tsx
+    App.tsx
+        NavBar
+        JoinModal
+        Router
+            A-Home
+
+            B-Campaign
+                PlayerBoard
+                GameBoard
+                    Board

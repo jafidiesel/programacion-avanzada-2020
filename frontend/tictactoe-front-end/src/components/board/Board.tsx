@@ -1,49 +1,36 @@
-import React from 'react';
-import './Board.scss';
+import { IBoard } from "interfaces/board";
+import React from "react";
+import "./Board.scss";
 
 interface BoardProps {
+    board: IBoard | null;
     selectCell(e: any): void;
-    board?: any;
 }
 
 function Board(props: BoardProps) {
+    if (!props.board) return <p>No board received!</p>;
+
     console.log("board", props.board);
-    let idBoard: number;
-    //idBoard = props.board.length ? props.board[0].idBoard : 0;
-    // hacer un array nuevo desde el objeto props.board para hacer el tablero
+    const { idBoard, ...cellBoard } = props.board;
+
+    // hacer un array nuevo desde el objeto props.board para hacer el tablero (esto no haria falta filtrando bien el map como esta ahora)
     // quitar o guardar el idBoard
     // Chequear que el tablero sea el ultimo (no recuerdo como era esto)
     return (
         <div className="board-component">
             <div className="board">
-                {
-                    props.board[0] ?
-                        Object.keys(props.board[0]).map((key, index) => {
-                            return (
-                                <button
-                                    key={key + 1}
-                                    value={index + 1}
-                                    className="box"
-                                    onClick={props.selectCell}
-                                >
-                                    {index + 1}
-                                </button>
-                            )
-                        })
-                    : null
-                }
-                {/* {Array.from({ length: 9 }, (value, key) => {
+                {Object.keys(cellBoard).map((key: string, index) => {
                     return (
                         <button
-                            key={key + 1}
-                            value={key + 1}
+                            key={key}
+                            value={index}
                             className="box"
-                            onClick={props.selectCell}
+                            onClick={() => props.selectCell(index)}
                         >
-                            {key + 1}
+                            {key ? key : "-"}
                         </button>
-                    )
-                })} */}
+                    );
+                })}
             </div>
         </div>
     );
