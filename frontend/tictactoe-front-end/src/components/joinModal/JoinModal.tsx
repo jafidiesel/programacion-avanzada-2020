@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Modal, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { joinCampaign } from "../../utils/apiCalls";
 
 interface JoinModalProps {
@@ -30,12 +31,13 @@ const JoinModal = (props: JoinModalProps) => {
         if (!numberPlayer) return;
         try {
             joinCampaign(props.campaignHash, namePlayer).then((res) => {
-                props.history.push({
+                /* props.history.push({
                     pathname: `/campaign/${props.campaignHash}`,
                     state: {
                         player1Selected: false,
                     },
                 });
+                 */
                 props.toggleShowModal();
             });
         } catch (error) {
@@ -108,7 +110,12 @@ const JoinModal = (props: JoinModalProps) => {
                 </Row>
             </Modal.Body>
             <Modal.Footer className="text-left">
-                <Button onClick={checkJoin}>Join Game</Button>
+                <Link to={{
+                    pathname: `/campaign/${props.campaignHash}`,
+                    state: {
+                        player1Selected: false
+                    }
+                }} ><Button onClick={checkJoin}>Join Game</Button></Link>
             </Modal.Footer>
         </Modal>
     );
