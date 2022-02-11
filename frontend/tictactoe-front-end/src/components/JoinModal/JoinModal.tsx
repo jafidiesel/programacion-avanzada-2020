@@ -31,13 +31,6 @@ const JoinModal = (props: JoinModalProps) => {
         if (!numberPlayer) return;
         try {
             joinCampaign(props.campaignHash, namePlayer).then((res) => {
-                /* props.history.push({
-                    pathname: `/campaign/${props.campaignHash}`,
-                    state: {
-                        player1Selected: false,
-                    },
-                });
-                 */
                 props.toggleShowModal();
             });
         } catch (error) {

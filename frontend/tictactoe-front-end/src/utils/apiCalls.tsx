@@ -1,4 +1,4 @@
-import { CampaignModel } from './static/interfaces';
+import { CampaignModel } from "interfaces/campaign";
 
 export async function getStatus(hash: string) {
 	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/status`, {
@@ -10,7 +10,6 @@ export async function getStatus(hash: string) {
 	})
 		.then(res => res.json())
 		.then((res: any) => {
-
 			return res.data;
 		})
 		.catch(error => console.error(error))

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Home from 'pages/home/Home';
-import Campaign from 'pages/campaign/Campaign';
+import Home from 'pages/Home/Home';
+import Campaign from 'pages/Campaign/Campaign';
 
 function Router() {
     return (

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import Board from "components/board/Board";
+import Board from "components/Board/Board";
 import "./GameBoard.scss";
 import { IBoard } from "interfaces/board";
 

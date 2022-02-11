@@ -8,7 +8,7 @@ interface BoardProps {
 }
 
 function Board(props: BoardProps) {
-    if (!props.board) return <p>No board received!</p>;
+    if (!props.board) return <h5>No board created! Make sure to share your hash with player 2!</h5>;
 
     console.log("board", props.board);
     const { idBoard, ...cellBoard } = props.board;

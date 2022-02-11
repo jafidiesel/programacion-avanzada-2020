@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { hashExist } from 'utils/apiCalls';
 
-import NavigationBar from 'components/navbar/NavigationBar';
+import NavigationBar from 'components/NavigationBar/NavigationBar';
 import Router from './Router';
-import JoinModal from 'components/joinModal/JoinModal';
+import JoinModal from 'components/JoinModal/JoinModal';
 
 const App = () => {
 	const [campaignHash, setCampaignHash] = useState("");
@@ -31,7 +31,7 @@ const App = () => {
 		setCampaignHash(event.target ? event.target.value : campaignHash);
 	}
 	return (
-		<Fragment>
+		<>
 			<BrowserRouter>
 				<NavigationBar
 					openModal={openModal}
@@ -46,7 +46,7 @@ const App = () => {
 					history={history}
 				/>
 			</BrowserRouter>
-		</Fragment>
+		</>
 	);
 }
 

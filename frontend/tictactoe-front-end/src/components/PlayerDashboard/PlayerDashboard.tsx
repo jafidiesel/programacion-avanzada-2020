@@ -1,18 +1,17 @@
+import { PlayersData } from "interfaces/player";
 import React, { Fragment } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-import { PlayersData } from "../../utils/static/interfaces";
+import "./PlayerDashboard.scss";
 
-import "./PlayerBoard.scss";
-
-interface PlayerBoardProps {
+interface PlayerDashboardProps {
     playersData: PlayersData;
     nextPlayer: string;
     hash: string;
     player1Selected?: boolean;
 }
 
-export default function PlayerBoard(props: PlayerBoardProps) {
+export default function PlayerDashboard(props: PlayerDashboardProps) {
     return (
         <Container>
             <Row>
