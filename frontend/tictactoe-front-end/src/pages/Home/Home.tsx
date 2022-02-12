@@ -12,7 +12,7 @@ import {
 } from "react-bootstrap";
 
 import { newCampaign } from "../../utils/apiCalls";
-import Errors from "../../utils/static/errors";
+import Errors from "../../utils/errors";
 
 import "./Home.scss";
 import { IError } from "interfaces/error";

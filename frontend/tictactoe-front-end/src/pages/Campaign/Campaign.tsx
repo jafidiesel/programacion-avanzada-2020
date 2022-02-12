@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 
-import Errors from '../../utils/static/errors';
+import Errors from '../../utils/errors';
 import { getStatus as getCampaignData } from '../../utils/apiCalls';
 import { PlayersData } from '../../interfaces/player';
 
@@ -9,6 +9,8 @@ import PlayerDashboard from 'components/PlayerDashboard/PlayerDashboard';
 import GameBoard from 'components/GameBoard/GameBoard';
 import { IError } from 'interfaces/error';
 import { CampaignResponseData } from 'interfaces/campaign';
+import { getActualPlayer } from 'utils/utils';
+import DebuggerDashboard from 'components/DebuggerDashboard/DebuggerDashboard';
 
 const Campaign = (props: any) => {
     const { hash } = props.match.params;
@@ -18,6 +20,7 @@ const Campaign = (props: any) => {
         namePlayer1: '',
         symbolPlayer1: ''
     };
+    let actualPlayer: string | null = null;
     const [campaignResponse, setCampaignResponse] = useState<CampaignResponseData | null>(null);
 
     const [error, setError] = useState<IError>({
@@ -53,6 +56,7 @@ const Campaign = (props: any) => {
             namePlayer2: campaignResponse.players[1].namePlayer2,
             symbolPlayer2: campaignResponse.players[1].symbolPlayer2
         };
+        actualPlayer = getActualPlayer(playersData, campaignResponse.campaign.nextPlayer);
     }
 
     return (
@@ -67,13 +71,14 @@ const Campaign = (props: any) => {
                     />
                     <GameBoard
                         hash={hash}
-                        player1Selected={player1Selected}
                         board={campaignResponse.lastBoard}
+                        actualPlayer={actualPlayer}
                         nextPlayer={campaignResponse.campaign.nextPlayer}
                     />
                 </>
             }
 
+            <DebuggerDashboard campaignResponse={campaignResponse} />
             <hr></hr>
             {
                 error.state && <Alert variant="danger">

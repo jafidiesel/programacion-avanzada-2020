@@ -4,7 +4,7 @@ import "./Board.scss";
 
 interface BoardProps {
     board: IBoard | null;
-    selectCell(e: any): void;
+    selectCell(index: Number): void;
 }
 
 function Board(props: BoardProps) {
@@ -14,15 +14,14 @@ function Board(props: BoardProps) {
     const { idBoard, ...cellBoard } = props.board;
 
     // hacer un array nuevo desde el objeto props.board para hacer el tablero (esto no haria falta filtrando bien el map como esta ahora)
-    // quitar o guardar el idBoard
     // Chequear que el tablero sea el ultimo (no recuerdo como era esto)
     return (
         <div className="board-component">
-            <div className="board">
-                {Object.keys(cellBoard).map((key: string, index) => {
+            <div className="board" id={`board-${idBoard}`}>
+                {Object.values(cellBoard).map((key: string, index) => {
                     return (
                         <button
-                            key={key}
+                            key={`cell-${index}`}
                             value={index}
                             className="box"
                             onClick={() => props.selectCell(index)}

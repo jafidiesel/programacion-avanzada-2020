@@ -16,7 +16,7 @@ export default function PlayerDashboard(props: PlayerDashboardProps) {
         <Container>
             <Row>
                 <Col xs="12">
-                    <h2 className="card-title">Player Board</h2>
+                    <h2 className="card-title">Player Dashboard</h2>
                 </Col>
             </Row>
             <Row>
@@ -29,26 +29,29 @@ export default function PlayerDashboard(props: PlayerDashboardProps) {
                 </Col>
                 <Col>
                     <Card className="main-card">
-                        <Fragment>
-                            <h4>{!props.player1Selected ? "You are " : ""}Player 2</h4>
-                            {!props.playersData.namePlayer2 ||
-                                props.playersData.namePlayer2 === "" ? (
-                                <p>
-                                    Invite your second player with your hash: <b>{props.hash}</b>
-                                </p>
-                            ) : (
-                                <Fragment>
-                                    <p>Name: {props.playersData.namePlayer2}</p>
-                                    <p>Symbol: {props.playersData.symbolPlayer2}</p>
-                                </Fragment>
-                            )}
-                        </Fragment>
+                        <h4>{!props.player1Selected ? "You are " : ""}Player 2</h4>
+                        {!props.playersData.namePlayer2 ||
+                            props.playersData.namePlayer2 === "" ? (
+                            <p>
+                                Invite your second player with your hash: <b>{props.hash}</b>
+                            </p>
+                        ) : (
+                            <>
+                                <p>Name: {props.playersData.namePlayer2}</p>
+                                <p>Symbol: {props.playersData.symbolPlayer2}</p>
+                            </>
+                        )}
                     </Card>
                 </Col>
                 <Col>
                     <Card className="main-card">
                         <Fragment>
                             <h4>Game Status:</h4>
+                            <p>Actual turn: {
+                                (props.nextPlayer && props.playersData.namePlayer1 !== props.nextPlayer)
+                                    ? props.playersData.namePlayer1
+                                    : props.playersData.namePlayer2
+                            }</p>
                             {props.nextPlayer ? (
                                 <p>Next Player: {props.nextPlayer}</p>
                             ) : (

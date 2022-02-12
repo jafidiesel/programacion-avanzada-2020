@@ -63,13 +63,14 @@ export async function hashExist(hash: string): Promise<any> {
 		.catch(error => error);
 }
 
-export async function setPosition(hash: string, position: number): Promise<any> {
+export async function setPosition(hash: string, position: Number, namePlayer: string): Promise<any> {
 	return await fetch(`${process.env.REACT_APP_API_URL}campaign/${hash}/cell/${position}`, {
-		method: 'GET',
+		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
-		}
+		},
+		body: JSON.stringify({ namePlayer: namePlayer })
 	})
 		.then(res => res)
 		.catch(error => console.error(error));

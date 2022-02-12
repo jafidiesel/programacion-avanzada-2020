@@ -1,4 +1,4 @@
-import { errorType } from "../utils/static/errors";
+import { errorType } from "../utils/errors";
 
 export interface IError {
     message: string;
