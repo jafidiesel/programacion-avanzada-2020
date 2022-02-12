@@ -1,6 +1,10 @@
 export interface PlayersData {
-  namePlayer1: string;
-  symbolPlayer1: string;
-  namePlayer2?: string;
-  symbolPlayer2?: string;
+  player1: {
+    name: string;
+    symbol: string;
+  };
+  player2?: {
+    name: string;
+    symbol: string;
+  };
 }

@@ -64,6 +64,7 @@ const Home = () => {
 					pathname: `/campaign/${hash}`,
 					state: {
 						player1Selected: true,
+						watcher: false
 					},
 				}}
 			>

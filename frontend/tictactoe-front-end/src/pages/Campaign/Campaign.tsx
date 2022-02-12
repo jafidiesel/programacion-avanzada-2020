@@ -9,18 +9,17 @@ import PlayerDashboard from 'components/PlayerDashboard/PlayerDashboard';
 import GameBoard from 'components/GameBoard/GameBoard';
 import { IError } from 'interfaces/error';
 import { CampaignResponseData } from 'interfaces/campaign';
-import { getActualPlayer } from 'utils/utils';
+import { getPlayersData, getScoreData } from 'utils/utils';
 import DebuggerDashboard from 'components/DebuggerDashboard/DebuggerDashboard';
+import { Score } from 'interfaces/score';
 
 const Campaign = (props: any) => {
     const { hash } = props.match.params;
-    const { player1Selected } = props.location?.state;
+    const { player1Selected, watcher } = props.location?.state;
 
-    let playersData: PlayersData = {
-        namePlayer1: '',
-        symbolPlayer1: ''
-    };
-    let actualPlayer: string | null = null;
+    let playersData: PlayersData | null = null;
+    let scoreData: Score | null = null;
+
     const [campaignResponse, setCampaignResponse] = useState<CampaignResponseData | null>(null);
 
     const [error, setError] = useState<IError>({
@@ -28,7 +27,6 @@ const Campaign = (props: any) => {
         state: false,
         type: Errors.NONE
     });
-
 
     useEffect(() => {
         async function fetchData() {
@@ -49,31 +47,27 @@ const Campaign = (props: any) => {
         return () => clearInterval(interval);
     }, [hash]);
 
-    if (!!campaignResponse) {
-        playersData = {
-            namePlayer1: campaignResponse.players[0].namePlayer1,
-            symbolPlayer1: campaignResponse.players[0].symbolPlayer1,
-            namePlayer2: campaignResponse.players[1].namePlayer2,
-            symbolPlayer2: campaignResponse.players[1].symbolPlayer2
-        };
-        actualPlayer = getActualPlayer(playersData, campaignResponse.campaign.nextPlayer);
-    }
+    playersData = getPlayersData(campaignResponse);
+    scoreData = getScoreData(campaignResponse);
 
     return (
         <Fragment>
             {
-                !!campaignResponse && <>
+                !!campaignResponse && !!playersData && <>
                     <PlayerDashboard
                         playersData={playersData}
                         nextPlayer={campaignResponse.campaign.nextPlayer}
                         hash={hash}
                         player1Selected={player1Selected}
+                        score={scoreData}
+                        watcher={watcher}
                     />
                     <GameBoard
                         hash={hash}
                         board={campaignResponse.lastBoard}
-                        actualPlayer={actualPlayer}
                         nextPlayer={campaignResponse.campaign.nextPlayer}
+                        playerInSession={player1Selected ? playersData.player1.name : !!playersData.player2 ? playersData.player2?.name! : ''}
+                        watcher={watcher}
                     />
                 </>
             }

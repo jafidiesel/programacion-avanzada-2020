@@ -1,4 +1,5 @@
 import { PlayersData } from "interfaces/player";
+import { Score } from "interfaces/score";
 import React, { Fragment } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 
@@ -9,9 +10,41 @@ interface PlayerDashboardProps {
     nextPlayer: string;
     hash: string;
     player1Selected?: boolean;
+    score: Score | null;
+    watcher: boolean;
 }
 
 export default function PlayerDashboard(props: PlayerDashboardProps) {
+
+    const renderFirstPlayerCard = () => {
+        return (
+            <Card className="main-card">
+                <h4>{props.player1Selected && !props.watcher ? "You are " : ""}Player 1</h4>
+                <p>Name: {props.playersData.player1.name}</p>
+                <p>Symbol: {props.playersData.player1.symbol}</p>
+            </Card>
+        )
+    }
+
+    const renderSecondPlayerCard = () => {
+        return (
+            <Card className="main-card">
+                <h4>{!props.player1Selected && !props.watcher ? "You are " : ""}Player 2</h4>
+                {!props.playersData.player2 || !props.watcher ? (
+                    <p>
+                        Invite your second player with your hash: <small>{props.hash}</small>
+                    </p>
+                ) : (
+                    <>
+                        <p>Name: {props.playersData.player2.name}</p>
+                        <p>Symbol: {props.playersData.player2.symbol}</p>
+                    </>
+                )}
+            </Card>
+        )
+    }
+
+
     return (
         <Container>
             <Row>
@@ -20,47 +53,31 @@ export default function PlayerDashboard(props: PlayerDashboardProps) {
                 </Col>
             </Row>
             <Row>
-                <Col>
-                    <Card className="main-card">
-                        <h4>{props.player1Selected ? "You are " : ""}Player 1</h4>
-                        <p>Name: {props.playersData.namePlayer1}</p>
-                        <p>Symbol: {props.playersData.symbolPlayer1}</p>
-                    </Card>
-                </Col>
-                <Col>
-                    <Card className="main-card">
-                        <h4>{!props.player1Selected ? "You are " : ""}Player 2</h4>
-                        {!props.playersData.namePlayer2 ||
-                            props.playersData.namePlayer2 === "" ? (
-                            <p>
-                                Invite your second player with your hash: <b>{props.hash}</b>
-                            </p>
-                        ) : (
-                            <>
-                                <p>Name: {props.playersData.namePlayer2}</p>
-                                <p>Symbol: {props.playersData.symbolPlayer2}</p>
-                            </>
-                        )}
-                    </Card>
-                </Col>
-                <Col>
+                <Col md="6" lg="3" className="pb-sm-2 pb-lg-0" > {renderFirstPlayerCard()} </Col>
+                <Col md="6" lg="3" className="pb-sm-2 pb-lg-0" > {renderSecondPlayerCard()} </Col>
+                <Col md="6" lg="3" className="pb-sm-2 pb-lg-0" >
                     <Card className="main-card">
                         <Fragment>
                             <h4>Game Status:</h4>
-                            <p>Actual turn: {
-                                (props.nextPlayer && props.playersData.namePlayer1 !== props.nextPlayer)
-                                    ? props.playersData.namePlayer1
-                                    : props.playersData.namePlayer2
-                            }</p>
                             {props.nextPlayer ? (
                                 <p>Next Player: {props.nextPlayer}</p>
                             ) : (
                                 <p>Waiting for second player</p>
                             )}
-                            <p>Game hash: {props.hash}</p>
+
+                            <h4>Game hash:</h4>
+                            <p><small>{props.hash}</small></p>
                         </Fragment>
                     </Card>
                 </Col>
+                {!!props.score && <Col md="6" lg="3">
+                    <Card className="main-card">
+                        <h4>Score:</h4>
+                        <p>Player 1 wins: {props.score.scorePlayer1}</p>
+                        <p>Player 2 wins: {props.score.scorePlayer2}</p>
+                        <p>Ties: {props.score.ties}</p>
+                    </Card>
+                </Col>}
             </Row>
         </Container>
     );

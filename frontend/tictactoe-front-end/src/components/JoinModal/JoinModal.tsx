@@ -34,7 +34,7 @@ const JoinModal = (props: JoinModalProps) => {
                 props.toggleShowModal();
             });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -54,7 +54,7 @@ const JoinModal = (props: JoinModalProps) => {
             </Modal.Header>
             <Modal.Body>
                 <Row>
-                    <Col md={{ offset: 3, span: 6 }}>
+                    <Col md={{ offset: 2, span: 8 }}>
                         <Form>
                             <Form.Row>
                                 <Col>
@@ -106,9 +106,10 @@ const JoinModal = (props: JoinModalProps) => {
                 <Link to={{
                     pathname: `/campaign/${props.campaignHash}`,
                     state: {
-                        player1Selected: false
+                        player1Selected: false,
+                        watcher: false
                     }
-                }} ><Button onClick={checkJoin}>Join Game</Button></Link>
+                }} ><Button className="secondary-button" onClick={checkJoin}>Join Game</Button></Link>
             </Modal.Footer>
         </Modal>
     );

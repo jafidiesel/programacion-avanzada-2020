@@ -13,7 +13,7 @@ interface INavigationBarProps {
 const NavigationBar = (props: INavigationBarProps) => {
     return (
         <Navbar bg="dark" expand="lg" className="navbar">
-            <Navbar.Brand className="navbar-brand">Tic-Tac-Toe</Navbar.Brand>
+            <Navbar.Brand className="navbar-brand"><Link to="/">Tic-Tac-Toe</Link></Navbar.Brand>
             <Nav className="ml-auto mr-2 navbar-link scale-animation">
                 <Link to="/">
                     New Campaign
@@ -34,6 +34,20 @@ const NavigationBar = (props: INavigationBarProps) => {
                 >
                     Join a game
                 </Button>
+                <Link to={{
+                    pathname: `/campaign/${props.campaignHash}`,
+                    state: {
+                        player1Selected: false,
+                        watcher: true
+                    }
+                }} >
+                    <Button
+                        disabled={props.campaignHash.length < 5}
+                        className="navbar-join scale-animation mx-3"
+                    >
+                        Watch game
+                    </Button>
+                </Link>
             </Form>
         </Navbar>
     );
