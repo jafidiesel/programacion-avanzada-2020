@@ -17,7 +17,7 @@ export default function GameBoard(props: GameBoardProps) {
     const lastBoard = props.board ? props.board[props.board.length - 1] : null;
 
     const selectCell = (index: Number, playerName: string) => {
-        setPosition(props.hash, index, playerName).then(res => console.log(res));
+        setPosition(props.hash, index, playerName);
     };
     return (
         <Container>

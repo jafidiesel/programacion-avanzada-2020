@@ -35,11 +35,11 @@ export default function PlayerDashboard(props: PlayerDashboardProps) {
                         Invite your second player with your hash: <small>{props.hash}</small>
                     </p>
                 ) : (
-                    <>
-                        <p>Name: {props.playersData.player2.name}</p>
-                        <p>Symbol: {props.playersData.player2.symbol}</p>
-                    </>
-                )}
+                        <>
+                            <p>Name: {props.playersData.player2.name}</p>
+                            <p>Symbol: {props.playersData.player2.symbol}</p>
+                        </>
+                    )}
             </Card>
         )
     }
@@ -62,8 +62,8 @@ export default function PlayerDashboard(props: PlayerDashboardProps) {
                             {props.nextPlayer ? (
                                 <p>Next Player: {props.nextPlayer}</p>
                             ) : (
-                                <p>Waiting for second player</p>
-                            )}
+                                    <p>Waiting for second player</p>
+                                )}
 
                             <h4>Game hash:</h4>
                             <p><small>{props.hash}</small></p>
